@@ -75,7 +75,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 flex flex-col`}
+        className={`${nunito.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 flex flex-col`}
       >
         <TopBar />
         <main className="max-w-5xl mx-auto p-4 md:p-8 flex-1 w-full flex flex-col">
