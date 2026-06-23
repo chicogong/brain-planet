@@ -96,6 +96,12 @@ export default function RootLayout({
               >
                 Powered by Chico
               </a>
+              <Link 
+                href="/about" 
+                className="hover:text-indigo-600 transition-colors font-medium flex items-center gap-1"
+              >
+                关于星球
+              </Link>
               <a 
                 href="https://github.com/chicogong/brain-planet" 
                 target="_blank" 

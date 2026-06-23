@@ -21,6 +21,18 @@ export const games = [
     bgColor: "bg-indigo-100",
     textColor: "text-indigo-600",
     icon: "👁️",
+    isNew: false
+  },
+  {
+    id: "memory",
+    name: "记忆翻牌",
+    category: "3-8岁",
+    tags: ["短时记忆", "图像识别"],
+    path: "/games/memory",
+    difficulty: "自适应",
+    bgColor: "bg-orange-100",
+    textColor: "text-orange-600",
+    icon: "🦊",
     isNew: true
   },
   {
