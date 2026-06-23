@@ -6,9 +6,11 @@ interface UserState {
   streakDays: number;
   lastLoginDate: string | null;
   unlockedGames: string[];
+  isMuted: boolean;
   addPoints: (points: number) => void;
   unlockGame: (gameId: string) => void;
   updateStreak: () => void;
+  toggleMute: () => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -18,7 +20,9 @@ export const useUserStore = create<UserState>()(
       streakDays: 0,
       lastLoginDate: null,
       unlockedGames: ['color-match'], // Default unlocked MVP game
+      isMuted: false,
       addPoints: (points) => set((state) => ({ points: state.points + points })),
+      toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
       unlockGame: (gameId) => set((state) => ({
         unlockedGames: state.unlockedGames.includes(gameId) 
           ? state.unlockedGames 

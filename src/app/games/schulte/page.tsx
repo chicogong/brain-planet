@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/useUserStore";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
+import { ArrowLeft, RefreshCw, Trophy, Share2 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { playSound, vibrate } from "@/lib/audio";
 
 export default function SchulteGridGame() {
   const [gridSize, setGridSize] = useState<number>(5); // Default 5x5 (1-25)
@@ -60,6 +61,8 @@ export default function SchulteGridGame() {
         // Win condition
         setGameState("won");
         addPoints(50);
+        playSound.cheer();
+        vibrate([100, 50, 100, 50, 200]);
         confetti({
           particleCount: 150,
           spread: 80,
@@ -67,10 +70,14 @@ export default function SchulteGridGame() {
         });
       } else {
         setExpectedNext(num + 1);
+        playSound.pop();
+        vibrate(30);
       }
     } else {
       // Error feedback
       setErrorIndex(index);
+      playSound.error();
+      vibrate([50, 50, 50]);
       setTimeout(() => setErrorIndex(null), 300);
     }
   };
@@ -191,12 +198,28 @@ export default function SchulteGridGame() {
               你的专注力超过了 95% 的小朋友！<br/>
               最终用时: <span className="text-indigo-600 font-bold">{formatTime(elapsedTime)} 秒</span>
             </p>
-            <button
-              onClick={initGame}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all active:scale-95"
-            >
-              再来一局
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={async () => {
+                  const text = `我刚才在「脑力星球」的舒尔特方格（${gridSize}x${gridSize}）挑战中，只用了 ${formatTime(elapsedTime)} 秒通关！快来看看你的专注力如何！`;
+                  if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+                    try { await navigator.share({ title: '脑力星球 - 战绩分享', text, url: window.location.origin }); } catch(e) {}
+                  } else {
+                    navigator.clipboard.writeText(text + ' ' + window.location.origin);
+                    alert('战绩已复制到剪贴板！');
+                  }
+                }}
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2"
+              >
+                <Share2 className="w-5 h-5" /> 分享战绩
+              </button>
+              <button
+                onClick={initGame}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-indigo-500/30"
+              >
+                再来一局
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

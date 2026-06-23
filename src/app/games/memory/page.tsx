@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/useUserStore";
 import Link from "next/link";
-import { ArrowLeft, RefreshCw, Trophy } from "lucide-react";
+import { ArrowLeft, RefreshCw, Trophy, Share2 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { playSound, vibrate } from "@/lib/audio";
 
 const EMOJIS = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮"];
 
@@ -76,11 +77,15 @@ export default function MemoryGame() {
             return matched;
           });
           setFlippedIndices([]);
+          playSound.pop();
+          vibrate(50);
           
           // Check win
           if (newCards.every((c, i) => i === firstIndex || i === secondIndex || c.isMatched)) {
             setGameState("won");
             addPoints(60);
+            playSound.cheer();
+            vibrate([100, 50, 100, 50, 200]);
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
           }
         }, 500);
@@ -94,6 +99,8 @@ export default function MemoryGame() {
             return reset;
           });
           setFlippedIndices([]);
+          playSound.error();
+          vibrate([50, 50, 50]);
         }, 1000);
       }
     }
@@ -196,12 +203,28 @@ export default function MemoryGame() {
                 你只用了 <span className="text-orange-500 font-bold text-xl">{moves}</span> 步就找出了所有动物！<br/>
                 记忆力大师非你莫属。
               </p>
-              <button
-                onClick={initGame}
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-orange-500/30"
-              >
-                挑战更高难度
-              </button>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={async () => {
+                    const text = `我刚才在「脑力星球」的记忆大挑战中，只用了 ${moves} 步就通关了！你能超越我吗？快来试试！`;
+                    if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+                      try { await navigator.share({ title: '脑力星球 - 战绩分享', text, url: window.location.origin }); } catch(e) {}
+                    } else {
+                      navigator.clipboard.writeText(text + ' ' + window.location.origin);
+                      alert('战绩已复制到剪贴板！');
+                    }
+                  }}
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2"
+                >
+                  <Share2 className="w-5 h-5" /> 分享战绩
+                </button>
+                <button
+                  onClick={initGame}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-xl transition-all active:scale-95 shadow-lg shadow-orange-500/30"
+                >
+                  挑战更高难度
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

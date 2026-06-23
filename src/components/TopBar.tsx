@@ -2,14 +2,16 @@
 
 import { useUserStore } from "@/store/useUserStore";
 import { useStore } from "@/store/useStore";
-import { Flame, Star, Share2 } from "lucide-react";
+import { Flame, Star, Share2, Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 
 export function TopBar() {
   const points = useStore(useUserStore, (state) => state.points);
   const streakDays = useStore(useUserStore, (state) => state.streakDays);
+  const isMuted = useStore(useUserStore, (state) => state.isMuted);
   const updateStreak = useUserStore((state) => state.updateStreak);
+  const toggleMute = useUserStore((state) => state.toggleMute);
 
   useEffect(() => {
     updateStreak();
@@ -56,6 +58,13 @@ export function TopBar() {
             <Star className="w-4 h-4 mr-1 fill-yellow-600" />
             {points ?? 0}
           </div>
+          <button
+            onClick={() => toggleMute?.()}
+            className="p-1.5 ml-2 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"
+            title={isMuted ? "开启音效" : "关闭音效"}
+          >
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+          </button>
         </div>
       </div>
     </header>

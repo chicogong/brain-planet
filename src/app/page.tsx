@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Lock } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { InstallBanner } from "@/components/InstallBanner";
 
 const container = {
   hidden: { opacity: 0 },
@@ -33,6 +34,8 @@ export default function Home() {
           专为 3-12 岁儿童设计的益智游戏站。无广告，免登陆，随时随地开启脑力挑战！
         </p>
       </div>
+
+      <InstallBanner />
 
       <motion.div 
         variants={container}
