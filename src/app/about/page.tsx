@@ -45,7 +45,7 @@ export default function AboutPage() {
             <a href="https://chico.aimake.cc" target="_blank" className="inline-block bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full font-bold hover:bg-indigo-100 transition-colors">
               了解作者 Chico
             </a>
-            <a href="https://brain-planet-beta.vercel.app" target="_blank" className="inline-block bg-green-50 text-green-600 px-4 py-2 rounded-full font-bold hover:bg-green-100 transition-colors">
+            <a href="https://brain-planet.pages.dev" target="_blank" className="inline-block bg-green-50 text-green-600 px-4 py-2 rounded-full font-bold hover:bg-green-100 transition-colors">
               备用访问节点
             </a>
           </div>
