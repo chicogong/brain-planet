@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { BadgeModal } from "@/components/BadgeModal";
 import { StatsModal } from "@/components/StatsModal";
+import { playSound } from "@/lib/audio";
 
 export function TopBar() {
   const isMuted = useStore(useUserStore, (state) => state.isMuted);
@@ -18,6 +19,19 @@ export function TopBar() {
 
   useEffect(() => {
     updateStreak();
+
+    const unlockAudio = () => {
+      playSound.initAudio();
+      document.removeEventListener("touchstart", unlockAudio);
+      document.removeEventListener("click", unlockAudio);
+    };
+    document.addEventListener("touchstart", unlockAudio, { once: true });
+    document.addEventListener("click", unlockAudio, { once: true });
+
+    return () => {
+      document.removeEventListener("touchstart", unlockAudio);
+      document.removeEventListener("click", unlockAudio);
+    };
   }, [updateStreak]);
 
   return (

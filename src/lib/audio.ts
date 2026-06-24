@@ -10,6 +10,23 @@ class AudioEngine {
   private static isBgmPlaying = false;
   private static bgmInterval: NodeJS.Timeout | null = null;
 
+  static initAudio() {
+    const ctx = this.getContext();
+    if (ctx && ctx.state === "suspended") {
+      ctx.resume();
+    }
+    // Play a silent oscillator to force unlock on iOS
+    if (ctx) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      gain.gain.value = 0;
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.001);
+    }
+  }
+
   private static getContext() {
     if (typeof window === "undefined") return null;
     if (!this.audioCtx) {
@@ -224,6 +241,7 @@ export const playSound = {
   playTone: (freq: number, duration?: number) => AudioEngine.playTone(freq, duration),
   toggleBGM: () => AudioEngine.toggleBGM(),
   stopBGM: () => AudioEngine.stopBGM(),
+  initAudio: () => AudioEngine.initAudio(),
 };
 
 export const vibrate = (pattern: number | number[] = 50) => {
