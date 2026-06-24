@@ -86,12 +86,6 @@ export default function MagicPianoGame() {
     tts.speak("点击琴键，弹奏属于你的旋律吧！");
   };
 
-  useEffect(() => {
-    if (gameState === "idle") {
-      tts.speak("欢迎来到魔法钢琴！");
-    }
-  }, [gameState]);
-
   return (
     <GameContainer
       title="魔法钢琴"

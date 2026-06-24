@@ -58,12 +58,6 @@ export default function ColorMatchGame() {
     tts.speak("找出颜色不一样的那块方块！看你能找对多少个。");
   };
 
-  useEffect(() => {
-    if (gameState === "idle") {
-      tts.speak("欢迎来到色彩发现者。");
-    }
-  }, [gameState]);
-
   const handleBlockClick = (index: number) => {
     if (gameState !== "playing") return;
 

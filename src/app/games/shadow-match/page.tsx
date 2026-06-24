@@ -59,12 +59,6 @@ export default function ShadowMatchGame() {
     }
   };
 
-  useEffect(() => {
-    if (gameState === "idle") {
-      tts.speak("欢迎来到影子匹配游戏。");
-    }
-  }, [gameState]);
-
   return (
     <GameContainer
       title="影子匹配"

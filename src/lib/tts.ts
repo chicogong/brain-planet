@@ -6,10 +6,9 @@ class TTSEngine {
 
   private static initVoice() {
     if (!this.synth) return;
-    // Prefer Chinese voices (e.g., Ting-Ting on iOS/Mac, or Google 普通话)
     const voices = this.synth.getVoices();
     const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
-    this.voice = zhVoices.find(v => v.name.includes('Ting-Ting')) || zhVoices[0] || null;
+    this.voice = zhVoices.find(v => v.name.includes('Ting-Ting') || v.name.includes('Google')) || zhVoices[0] || null;
   }
 
   static speak(text: string) {
@@ -22,8 +21,12 @@ class TTSEngine {
     // Cancel any ongoing speech
     this.synth.cancel();
 
-    if (!this.voice) {
-      this.initVoice();
+    // In Chrome, getVoices might be populated late, so we re-init if not found
+    this.initVoice();
+
+    // Chrome sometimes suspends the audio context, resume it
+    if (this.synth.resume) {
+      this.synth.resume();
     }
 
     const utterance = new SpeechSynthesisUtterance(text);

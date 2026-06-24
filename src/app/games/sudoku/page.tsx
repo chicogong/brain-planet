@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useUserStore } from "@/store/useUserStore";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Trophy, ArrowLeft, RefreshCw, Eraser } from "lucide-react";
-import Link from "next/link";
-import confetti from "canvas-confetti";
+import { RefreshCw, Eraser } from "lucide-react";
+import { GameContainer } from "@/components/GameContainer";
+import { useGameSession } from "@/hooks/useGameSession";
+import { playSound, vibrate } from "@/lib/audio";
+import { tts } from "@/lib/tts";
 
 // Predefined 4x4 solutions
 const SOLUTIONS = [
@@ -52,11 +52,25 @@ export default function SudokuGame() {
   const [board, setBoard] = useState<Cell[]>([]);
   const [solution, setSolution] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const addPoints = useUserStore((state) => state.addPoints);
 
-  const initGame = () => {
+  const {
+    gameState,
+    score,
+    initGame,
+    handleCorrect,
+    handleWrong
+  } = useGameSession({
+    gameId: "sudoku",
+    winCondition: (_, totalCorrect) => totalCorrect >= 1, // Win per puzzle
+  });
+
+  const handleStart = () => {
+    initGame();
+    generatePuzzle();
+    tts.speak("填满一到四，保证每行每列不重复！");
+  };
+
+  const generatePuzzle = () => {
     const idx = Math.floor(Math.random() * SOLUTIONS.length);
     const sol = SOLUTIONS[idx];
     const mask = MASKS[idx];
@@ -74,28 +88,22 @@ export default function SudokuGame() {
     setSolution(sol);
     setBoard(initialBoard);
     setSelectedCell(null);
-    setGameOver(false);
   };
 
-  useEffect(() => {
-    initGame();
-  }, []);
-
   const handleCellClick = (index: number) => {
-    if (board[index].isInitial || gameOver) return;
+    if (board[index].isInitial || gameState !== "playing") return;
     setSelectedCell(index);
   };
 
   const handleNumberInput = (num: number | null) => {
-    if (selectedCell === null || gameOver) return;
+    if (selectedCell === null || gameState !== "playing") return;
 
     const newBoard = [...board];
     newBoard[selectedCell].value = num;
     newBoard[selectedCell].isError = false; // Reset error state on new input
 
-    // Basic Validation: highlight duplicates in same row/col/block immediately?
-    // For kids, let's just let them fill it and check on win
     setBoard(newBoard);
+    playSound.pop();
 
     // Auto check if full
     if (newBoard.every((c) => c.value !== null)) {
@@ -115,125 +123,84 @@ export default function SudokuGame() {
 
     if (hasError) {
       setBoard(errorBoard);
+      handleWrong();
+      vibrate([50, 50]);
     } else {
-      handleWin();
+      handleCorrect();
     }
   };
 
-  const handleWin = () => {
-    setGameOver(true);
-    setScore(score + 15);
-    addPoints(15);
-    confetti({
-      particleCount: 150,
-      spread: 80,
-      colors: ['#4ade80', '#fbbf24', '#f87171']
-    });
-  };
-
   return (
-    <div className="flex-1 flex flex-col items-center justify-center py-8">
-      <div className="w-full max-w-md flex justify-between items-center mb-6">
-        <Link href="/">
-          <Button variant="ghost" size="icon" className="rounded-full bg-white shadow-sm">
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </Button>
-        </Link>
-        <div className="flex gap-4">
-          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm font-bold text-gray-700">
-            <Trophy className="w-5 h-5 text-green-500" />
-            {score}
+    <GameContainer
+      title="星球数独"
+      gameState={gameState}
+      score={score}
+      emojiIcon="🧩"
+      themeColor="green"
+      onStart={handleStart}
+      winMessage="逻辑满分！"
+      shareText={`我在「脑力星球」的星球数独挑战中完美通关！快来看看你的逻辑推理能力如何！`}
+      idleContent={
+        <>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">星球数独</h2>
+          <p className="text-gray-500 max-w-sm mx-auto mb-6">
+            填满 1-4，保证每行每列不重复！<br/>
+            这是锻炼逻辑推理能力的绝佳游戏。
+          </p>
+        </>
+      }
+      playingContent={
+        <div className="w-full flex flex-col items-center">
+          {/* Sudoku Grid 4x4 */}
+          <div className="grid grid-cols-4 gap-1 bg-green-200 p-1.5 rounded-2xl mb-8 w-full max-w-[280px] aspect-square shadow-inner">
+            {board.map((cell, i) => {
+              const isRightEdge = i % 4 === 1;
+              const isBottomEdge = Math.floor(i / 4) === 1;
+              
+              return (
+                <div
+                  key={i}
+                  onClick={() => handleCellClick(i)}
+                  className={`
+                    flex items-center justify-center text-3xl font-black rounded-lg cursor-pointer select-none transition-all
+                    ${cell.isInitial ? "bg-green-50 text-green-800 cursor-default" : "bg-white"}
+                    ${selectedCell === i ? "ring-4 ring-green-400 z-10 scale-105" : ""}
+                    ${cell.isError ? "bg-red-100 text-red-500 animate-pulse" : "text-gray-700"}
+                    ${isRightEdge ? "mr-1" : ""}
+                    ${isBottomEdge ? "mb-1" : ""}
+                  `}
+                >
+                  {cell.value || ""}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Number pad */}
+          <div className="flex justify-center gap-3 w-full max-w-[280px] mb-4">
+            {[1, 2, 3, 4].map((num) => (
+              <Button
+                key={num}
+                variant="outline"
+                className="flex-1 h-14 rounded-xl text-2xl font-bold bg-green-50 hover:bg-green-100 text-green-700 border-green-200 shadow-sm"
+                onClick={() => handleNumberInput(num)}
+              >
+                {num}
+              </Button>
+            ))}
+          </div>
+          
+          {/* Actions */}
+          <div className="flex justify-between w-full max-w-[280px]">
+            <Button variant="ghost" className="text-gray-500 bg-white" onClick={() => handleNumberInput(null)}>
+              <Eraser className="w-5 h-5 mr-1" /> 擦除
+            </Button>
+            <Button variant="ghost" className="text-gray-500 bg-white" onClick={generatePuzzle}>
+              <RefreshCw className="w-5 h-5 mr-1" /> 换一题
+            </Button>
           </div>
         </div>
-      </div>
-
-      <Card className="w-full max-w-md p-6 bg-white shadow-xl rounded-3xl border-4 border-green-50 relative overflow-hidden flex flex-col">
-        <div className="text-center mb-4">
-          <h2 className="text-2xl font-black text-gray-800 flex items-center justify-center gap-2">
-            <span className="text-4xl">🧩</span> 星球数独
-          </h2>
-          <p className="text-sm text-gray-500 mt-2">填满 1-4，保证每行每列不重复！</p>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {!gameOver ? (
-            <motion.div 
-              key="playing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex-1 flex flex-col items-center"
-            >
-              {/* Sudoku Grid 4x4 */}
-              <div className="grid grid-cols-4 gap-1 bg-green-200 p-1.5 rounded-2xl mb-8 w-full max-w-[280px] aspect-square shadow-inner">
-                {board.map((cell, i) => {
-                  const isRightEdge = i % 4 === 1;
-                  const isBottomEdge = Math.floor(i / 4) === 1;
-                  
-                  return (
-                    <div
-                      key={i}
-                      onClick={() => handleCellClick(i)}
-                      className={`
-                        flex items-center justify-center text-3xl font-black rounded-lg cursor-pointer select-none transition-all
-                        ${cell.isInitial ? "bg-green-50 text-green-800 cursor-default" : "bg-white"}
-                        ${selectedCell === i ? "ring-4 ring-green-400 z-10 scale-105" : ""}
-                        ${cell.isError ? "bg-red-100 text-red-500 animate-pulse" : "text-gray-700"}
-                        ${isRightEdge ? "mr-1" : ""}
-                        ${isBottomEdge ? "mb-1" : ""}
-                      `}
-                    >
-                      {cell.value || ""}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Number pad */}
-              <div className="flex justify-center gap-3 w-full max-w-[280px] mb-4">
-                {[1, 2, 3, 4].map((num) => (
-                  <Button
-                    key={num}
-                    variant="outline"
-                    className="flex-1 h-14 rounded-xl text-2xl font-bold bg-green-50 hover:bg-green-100 text-green-700 border-green-200 shadow-sm"
-                    onClick={() => handleNumberInput(num)}
-                  >
-                    {num}
-                  </Button>
-                ))}
-              </div>
-              
-              {/* Actions */}
-              <div className="flex justify-between w-full max-w-[280px]">
-                <Button variant="ghost" className="text-gray-500" onClick={() => handleNumberInput(null)}>
-                  <Eraser className="w-5 h-5 mr-1" /> 擦除
-                </Button>
-                <Button variant="ghost" className="text-gray-500" onClick={initGame}>
-                  <RefreshCw className="w-5 h-5 mr-1" /> 换一题
-                </Button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div 
-              key="win"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex-1 flex flex-col items-center justify-center text-center space-y-6 py-8"
-            >
-              <div className="text-7xl mb-2 animate-bounce">🏆</div>
-              <h2 className="text-3xl font-black text-green-600">逻辑满分！</h2>
-              <div className="bg-green-50 rounded-2xl p-6 border-2 border-green-100 w-full">
-                <p className="text-gray-500 mb-2">本次收获</p>
-                <p className="text-4xl font-black text-green-600">+15</p>
-                <p className="text-sm text-green-600/80 mt-2 font-semibold">星星奖励</p>
-              </div>
-              <Button onClick={initGame} size="lg" className="w-full rounded-full text-lg h-14 bg-green-500 hover:bg-green-600 shadow-lg">
-                下一关
-              </Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Card>
-    </div>
+      }
+    />
   );
 }

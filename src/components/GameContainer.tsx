@@ -10,12 +10,13 @@ interface GameContainerProps {
   score?: number;
   timeLeft?: number;
   emojiIcon: string;
-  themeColor: "indigo" | "teal" | "orange" | "red" | "purple" | "blue" | "gray";
+  themeColor: "indigo" | "teal" | "orange" | "red" | "purple" | "blue" | "gray" | "green";
   idleContent: React.ReactNode;
   playingContent: React.ReactNode;
   onStart: () => void;
   winMessage?: string;
   shareText?: string;
+  wonContent?: React.ReactNode;
 }
 
 const colorMap = {
@@ -26,6 +27,7 @@ const colorMap = {
   purple: "bg-purple-500 hover:bg-purple-600 shadow-purple-500/30 text-purple-600 bg-purple-50",
   blue: "bg-blue-500 hover:bg-blue-600 shadow-blue-500/30 text-blue-600 bg-blue-50",
   gray: "bg-gray-800 hover:bg-gray-900 shadow-gray-800/30 text-gray-800 bg-gray-100",
+  green: "bg-green-500 hover:bg-green-600 shadow-green-500/30 text-green-600 bg-green-50",
 };
 
 export function GameContainer({
@@ -39,7 +41,8 @@ export function GameContainer({
   playingContent,
   onStart,
   winMessage = "挑战成功！",
-  shareText = "我刚才在「脑力星球」完成了一次大脑挑战，快来试试吧！"
+  shareText = "我刚才在「脑力星球」完成了一次大脑挑战，快来试试吧！",
+  wonContent
 }: GameContainerProps) {
   
   const classes = colorMap[themeColor].split(" ");
@@ -120,6 +123,13 @@ export function GameContainer({
                 最终得分: <span className={`font-bold text-2xl ${textClass}`}>{score}</span> 分
               </p>
             )}
+            
+            {wonContent && (
+              <div className="w-full max-w-sm mb-8">
+                {wonContent}
+              </div>
+            )}
+
             <div className="flex flex-col gap-4 w-full max-w-sm mt-4">
               <button
                 onClick={async () => {
