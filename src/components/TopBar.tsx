@@ -5,6 +5,7 @@ import { useStore } from "@/store/useStore";
 import { Flame, Star, Share2, Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { BadgeModal } from "@/components/BadgeModal";
 
 export function TopBar() {
   const points = useStore(useUserStore, (state) => state.points);
@@ -58,6 +59,7 @@ export function TopBar() {
             <Star className="w-4 h-4 mr-1 fill-yellow-600" />
             {points ?? 0}
           </div>
+          <BadgeModal />
           <button
             onClick={() => toggleMute?.()}
             className="p-1.5 ml-2 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"

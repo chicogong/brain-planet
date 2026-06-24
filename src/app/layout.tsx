@@ -3,6 +3,8 @@ import { Nunito, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TopBar } from "@/components/TopBar";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -117,6 +119,8 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

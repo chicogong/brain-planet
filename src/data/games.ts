@@ -59,5 +59,22 @@ export const games = [
     icon: '🔢',
     locked: false,
     isNew: true
-  }
+  },
+  {
+    id: "whack-a-mole",
+    title: "萌宠打地鼠",
+    description: "考验极速反应力与手眼协调，看谁能拿到最高分！",
+    image: "/icons/schulte.svg",
+    href: "/games/whack-a-mole",
+    color: "bg-red-100",
+    tags: ["反应力", "手速", "专注力"],
+    difficulty: "全年龄",
+    category: "反应训练",
+    name: "萌宠打地鼠",
+    bgColor: "bg-red-100",
+    textColor: "text-red-600",
+    icon: "🐹",
+    path: "/games/whack-a-mole",
+    isNew: true
+  },
 ];
