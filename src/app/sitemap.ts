@@ -3,6 +3,33 @@ import { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const games = [
+    "balance",
+    "color-match",
+    "emotion",
+    "math-24",
+    "maze",
+    "memory",
+    "pattern-master",
+    "piano",
+    "schulte",
+    "sequence",
+    "shadow-match",
+    "simon",
+    "sorting",
+    "space-tracker",
+    "sudoku",
+    "whack-a-mole",
+    "word-match",
+  ];
+
+  const gameUrls = games.map((game) => ({
+    url: `https://kids.aimake.cc/games/${game}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as "weekly",
+    priority: 0.9,
+  }));
+
   return [
     {
       url: "https://kids.aimake.cc",
@@ -22,59 +49,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
-    {
-      url: "https://kids.aimake.cc/games/color-match",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/math-24",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/memory",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/pattern-master",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/piano",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/schulte",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/shadow-match",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/sudoku",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://kids.aimake.cc/games/whack-a-mole",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
+    ...gameUrls,
   ];
 }

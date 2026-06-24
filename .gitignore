@@ -48,3 +48,7 @@ public/workbox-*.js.map
 
 # mcp
 .mcp.json
+
+# AI Agent config
+.agents/
+.codebuddy/

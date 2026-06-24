@@ -30,9 +30,9 @@
 
 ---
 
-## 🎮 14 大核心游戏矩阵 (Game Matrix)
+## 🎮 17 大核心游戏矩阵 (Game Matrix)
 
-我们的游戏库已经扩充到 **14 款**，涵盖了从蒙氏基础启蒙到高阶数理逻辑的全方位训练：
+我们的游戏库已经扩充到 **17 款**，涵盖了从蒙氏基础启蒙到高阶数理逻辑的全方位训练：
 
 ### 1. 蒙氏启蒙 (Montessori Core)
 
@@ -122,5 +122,32 @@ npm install
 # 启动开发环境
 npm run dev
 ```
+
+## 📁 核心目录结构 (Directory Structure)
+
+```text
+src/
+├── app/
+│   ├── games/        # 17款独立游戏的路由与页面
+│   ├── parents/      # 家长看板数据中心
+│   ├── sitemap.ts    # 动态生成的 SEO 站点地图
+│   └── layout.tsx    # 全局布局与核心 SEO Meta 数据
+├── components/       # 全局复用组件 (基于 shadcn/ui)
+├── data/             # 静态数据 (游戏列表矩阵配置)
+├── store/            # Zustand 状态管理 (PWA本地缓存)
+└── lib/              # 核心工具函数与算法
+```
+
+---
+
+## 🤝 如何添加新游戏 (How to Add a New Game)
+
+本项目架构极度解耦，新增游戏只需 3 步：
+
+1. 在 `src/app/games/` 下新建你的游戏文件夹（如 `my-game/page.tsx`）。
+2. 在 `src/data/games.ts` 中注册新游戏的元数据（名称、图标、路由）。
+3. （可选）在 `sitemap.ts` 中添加该路由以获得 SEO 收录。
+
+欢迎提交 Pull Request，一起为孩子打造更丰富的脑力宇宙！
 
 > **Created by [Chico](https://chico.aimake.cc/)**

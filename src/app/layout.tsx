@@ -17,6 +17,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kids.aimake.cc"),
+  alternates: {
+    canonical: "/",
+  },
   title: "脑力星球 (Brain Planet) - 免费免登陆的儿童益智游戏平台",
   description:
     "精选全球优质儿童益智游戏，涵盖数学思维、逻辑推理、色彩感知。全免费、免登陆、无广告打扰，完美支持离线游玩的家长育儿神器。",
@@ -61,6 +65,14 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "脑力星球",
+  },
+  verification: {
+    yandex: "d12a2b1924f54936",
+    google: "uJ83um8k9_iom9DdkHRY_hTQwZE2QDjupfhvXQTyHGE",
+    other: {
+      "baidu-site-verification": ["codeva-dNFmwA2bNN"],
+      "msvalidate.01": ["B543FF67D291AA27F8D470ADEA45F876"],
+    },
   },
 };
 
