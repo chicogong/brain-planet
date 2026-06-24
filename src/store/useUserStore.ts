@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { playSound, vibrate } from "@/lib/audio";
 
 export interface Badge {
   id: string;
@@ -112,10 +113,8 @@ export const useUserStore = create<UserState>()(
         set((state) => {
           const newMuted = !state.isMuted;
           if (typeof window !== "undefined") {
-            import("@/lib/audio").then(({ playSound }) => {
-              if (newMuted) playSound.stopBGM();
-              else playSound.toggleBGM();
-            });
+            if (newMuted) playSound.stopBGM();
+            else playSound.toggleBGM();
           }
           return { isMuted: newMuted };
         }),
@@ -153,18 +152,16 @@ export const useUserStore = create<UserState>()(
           if (!state.unlockedBadges.includes(badgeId)) {
             // Play sound and vibrate on new badge
             if (typeof window !== "undefined") {
-              import("@/lib/audio").then(({ playSound, vibrate }) => {
-                playSound.cheer();
-                vibrate([100, 50, 100, 50, 200]);
-                // Native alert for now, can be replaced with a beautiful modal
-                setTimeout(
-                  () =>
-                    alert(
-                      `🏆 恭喜获得新徽章：${AVAILABLE_BADGES.find((b) => b.id === badgeId)?.name}`
-                    ),
-                  100
-                );
-              });
+              playSound.cheer();
+              vibrate([100, 50, 100, 50, 200]);
+              // Native alert for now, can be replaced with a beautiful modal
+              setTimeout(
+                () =>
+                  alert(
+                    `🏆 恭喜获得新徽章：${AVAILABLE_BADGES.find((b) => b.id === badgeId)?.name}`
+                  ),
+                100
+              );
             }
             return { unlockedBadges: [...state.unlockedBadges, badgeId] };
           }
@@ -200,7 +197,7 @@ export const useUserStore = create<UserState>()(
           ) {
             setTimeout(() => get().addPoints(100), 10);
             if (typeof window !== "undefined") {
-              import("@/lib/audio").then(({ playSound }) => playSound.cheer());
+              playSound.cheer();
             }
             return { dailyQuest: { ...state.dailyQuest, claimed: true } };
           }

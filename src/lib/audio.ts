@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useUserStore } from "@/store/useUserStore";
-
 class AudioEngine {
   private static audioCtx: AudioContext | null = null;
   private static bgmOscillators: OscillatorNode[] = [];
@@ -46,8 +44,12 @@ class AudioEngine {
 
   private static canPlay() {
     if (typeof window === "undefined") return false;
-    const state = useUserStore.getState();
-    return !state.isMuted;
+    try {
+      const data = JSON.parse(localStorage.getItem("brain-planet-storage") || "{}");
+      return !data?.state?.isMuted;
+    } catch {
+      return true;
+    }
   }
 
   static toggleBGM() {
@@ -247,8 +249,8 @@ export const playSound = {
 export const vibrate = (pattern: number | number[] = 50) => {
   if (typeof window !== "undefined" && navigator.vibrate) {
     try {
-      const state = useUserStore.getState();
-      if (state.isMuted) return;
+      const data = JSON.parse(localStorage.getItem("brain-planet-storage") || "{}");
+      if (data?.state?.isMuted) return;
       navigator.vibrate(pattern);
     } catch (e) {
       // Ignore vibration errors
