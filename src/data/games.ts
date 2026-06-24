@@ -75,6 +75,43 @@ export const games = [
     textColor: "text-red-600",
     icon: "🐹",
     path: "/games/whack-a-mole",
+    locked: false,
+    isNew: false
+  },
+  {
+    id: "pattern-master",
+    title: "逻辑找规律",
+    description: "观察图案序列，找出隐藏的规律。蒙氏教育核心逻辑启蒙！",
+    image: "/icons/sudoku.svg",
+    href: "/games/pattern-master",
+    color: "bg-teal-100",
+    tags: ["逻辑推理", "观察力", "蒙氏早教"],
+    difficulty: "入门",
+    category: "逻辑思维",
+    name: "逻辑找规律",
+    bgColor: "bg-teal-100",
+    textColor: "text-teal-600",
+    icon: "🧩",
+    path: "/games/pattern-master",
+    locked: false,
     isNew: true
   },
+  {
+    id: "shadow-match",
+    title: "影子匹配",
+    description: "通过纯黑的轮廓剪影找出对应的动物，锻炼空间想象与特征提取能力。",
+    image: "/icons/schulte.svg",
+    href: "/games/shadow-match",
+    color: "bg-gray-200",
+    tags: ["空间想象", "轮廓识别", "蒙氏早教"],
+    difficulty: "幼儿",
+    category: "空间认知",
+    name: "影子匹配",
+    bgColor: "bg-gray-100",
+    textColor: "text-gray-800",
+    icon: "🦇",
+    path: "/games/shadow-match",
+    locked: false,
+    isNew: true
+  }
 ];

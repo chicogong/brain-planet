@@ -15,6 +15,8 @@ export const AVAILABLE_BADGES: Badge[] = [
   { id: 'memory_master', name: '最强记忆大脑', description: '通关困难模式翻牌游戏', icon: '🧠', color: 'bg-purple-100 text-purple-600' },
   { id: 'streak_3', name: '恒星开拓者', description: '保持连续3天登陆', icon: '🔥', color: 'bg-orange-100 text-orange-600' },
   { id: 'whack_100', name: '黄金右手', description: '打地鼠单局超过 500 分', icon: '⚡', color: 'bg-red-100 text-red-600' },
+  { id: 'pattern_master', name: '大侦探福尔摩斯', description: '找规律连续答对10题', icon: '🔍', color: 'bg-teal-100 text-teal-600' },
+  { id: 'shadow_wizard', name: '光影魔术手', description: '完成15次影子匹配', icon: '🦇', color: 'bg-gray-200 text-gray-800' },
 ];
 
 interface UserState {
