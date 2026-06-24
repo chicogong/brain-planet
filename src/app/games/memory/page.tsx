@@ -152,11 +152,13 @@ export default function MemoryGame() {
           {cards.map((card, i) => (
             <div 
               key={card.id} 
-              className="relative aspect-[3/4] cursor-pointer perspective-1000"
+              className="relative aspect-[3/4] cursor-pointer"
+              style={{ perspective: "1000px" }}
               onClick={() => handleCardClick(i)}
             >
               <motion.div
-                className="w-full h-full relative preserve-3d"
+                className="w-full h-full relative"
+                style={{ transformStyle: "preserve-3d" }}
                 initial={false}
                 animate={{ rotateY: card.isFlipped || card.isMatched ? 180 : 0 }}
                 transition={{ duration: 0.4, type: "spring", stiffness: 260, damping: 20 }}
