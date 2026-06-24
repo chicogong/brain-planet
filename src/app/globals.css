@@ -126,8 +126,10 @@
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
+    overscroll-behavior: none;
   }
   html {
     @apply font-sans;
+    overscroll-behavior: none;
   }
 }
