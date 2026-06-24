@@ -2,7 +2,7 @@
 
 import { useUserStore } from "@/store/useUserStore";
 import { useStore } from "@/store/useStore";
-import { Flame, Star, Share2, Volume2, VolumeX } from "lucide-react";
+import { Flame, Star, Share2, Volume2, VolumeX, Gift } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { BadgeModal } from "@/components/BadgeModal";
@@ -13,6 +13,8 @@ export function TopBar() {
   const isMuted = useStore(useUserStore, (state) => state.isMuted);
   const updateStreak = useUserStore((state) => state.updateStreak);
   const toggleMute = useUserStore((state) => state.toggleMute);
+  const dailyQuest = useStore(useUserStore, (state) => state.dailyQuest);
+  const claimDailyQuest = useUserStore((state) => state.claimDailyQuest);
 
   useEffect(() => {
     updateStreak();
@@ -59,6 +61,32 @@ export function TopBar() {
             <Star className="w-4 h-4 mr-1 fill-yellow-600" />
             {points ?? 0}
           </div>
+
+          {dailyQuest && (
+            <button
+              onClick={() => {
+                if (dailyQuest.playCount >= 3 && !dailyQuest.claimed) {
+                  claimDailyQuest();
+                } else if (!dailyQuest.claimed) {
+                  alert(`每日任务：今天玩 3 次游戏奖励 100 积分！(进度: ${dailyQuest.playCount}/3)`);
+                }
+              }}
+              className={`flex items-center px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all ${
+                dailyQuest.claimed 
+                  ? "bg-gray-100 text-gray-400 cursor-default" 
+                  : dailyQuest.playCount >= 3 
+                    ? "bg-green-100 text-green-600 animate-pulse hover:bg-green-200" 
+                    : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+              }`}
+              title="每日任务"
+            >
+              <Gift className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">
+                {dailyQuest.claimed ? "已领" : dailyQuest.playCount >= 3 ? "领奖" : `${dailyQuest.playCount}/3`}
+              </span>
+            </button>
+          )}
+
           <BadgeModal />
           <button
             onClick={() => toggleMute?.()}

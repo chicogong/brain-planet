@@ -43,12 +43,14 @@ interface UserState {
   isMuted: boolean;
   unlockedBadges: string[];
   gameStats: Record<string, number>; // gameId -> playCount or winCount
+  dailyQuest: { date: string; playCount: number; claimed: boolean };
   addPoints: (points: number) => void;
   unlockGame: (gameId: string) => void;
   updateStreak: () => void;
   toggleMute: () => void;
   unlockBadge: (badgeId: string) => void;
   incrementGameStat: (gameId: string) => void;
+  claimDailyQuest: () => void;
 }
 
 export const useUserStore = create<UserState>()(
@@ -61,6 +63,7 @@ export const useUserStore = create<UserState>()(
       isMuted: false,
       unlockedBadges: [],
       gameStats: {},
+      dailyQuest: { date: '', playCount: 0, claimed: false },
       addPoints: (points) => set((state) => {
         const newPoints = state.points + points;
         if (state.points === 0 && newPoints > 0) {
@@ -117,7 +120,30 @@ export const useUserStore = create<UserState>()(
         if (gameId === 'math-24' && count >= 3) {
           setTimeout(() => get().unlockBadge('math_genius'), 500);
         }
-        return { gameStats: { ...state.gameStats, [gameId]: count } };
+        
+        const today = new Date().toISOString().split('T')[0];
+        let newQuest = { ...state.dailyQuest };
+        if (newQuest.date !== today) {
+          newQuest = { date: today, playCount: 1, claimed: false };
+        } else if (!newQuest.claimed) {
+          newQuest.playCount += 1;
+        }
+
+        return { 
+          gameStats: { ...state.gameStats, [gameId]: count },
+          dailyQuest: newQuest
+        };
+      }),
+      claimDailyQuest: () => set((state) => {
+        const today = new Date().toISOString().split('T')[0];
+        if (state.dailyQuest.date === today && state.dailyQuest.playCount >= 3 && !state.dailyQuest.claimed) {
+          setTimeout(() => get().addPoints(100), 10);
+          if (typeof window !== 'undefined') {
+            import('@/lib/audio').then(({ playSound }) => playSound.cheer());
+          }
+          return { dailyQuest: { ...state.dailyQuest, claimed: true } };
+        }
+        return state;
       })
     }),
     {
