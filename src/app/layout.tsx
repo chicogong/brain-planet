@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TopBar } from "@/components/TopBar";
@@ -15,6 +15,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#F9F9F9",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kids.aimake.cc"),
