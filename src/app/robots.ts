@@ -1,6 +1,4 @@
-import { MetadataRoute } from 'next';
-
-export const dynamic = 'force-static';
+import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,5 +7,5 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
     },
     sitemap: 'https://kids.aimake.cc/sitemap.xml',
-  };
+  }
 }

@@ -42,6 +42,10 @@ export const metadata: Metadata = {
     title: "脑力星球 - 儿童益智训练营",
     description: "全免费、免登陆、支持离线的儿童益智游戏集合！",
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
