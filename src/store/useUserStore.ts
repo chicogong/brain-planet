@@ -71,7 +71,16 @@ export const useUserStore = create<UserState>()(
         }
         return { points: newPoints };
       }),
-      toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
+      toggleMute: () => set((state) => {
+        const newMuted = !state.isMuted;
+        if (typeof window !== 'undefined') {
+          import('@/lib/audio').then(({ playSound }) => {
+            if (newMuted) playSound.stopBGM();
+            else playSound.toggleBGM();
+          });
+        }
+        return { isMuted: newMuted };
+      }),
       unlockGame: (gameId) => set((state) => ({
         unlockedGames: state.unlockedGames.includes(gameId) 
           ? state.unlockedGames 

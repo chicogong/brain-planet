@@ -2,7 +2,7 @@
 
 import { useUserStore } from "@/store/useUserStore";
 import { useStore } from "@/store/useStore";
-import { Flame, Star, Share2, Volume2, VolumeX, Gift } from "lucide-react";
+import { Flame, Star, Share2, Volume2, VolumeX, Gift, Music4 } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { BadgeModal } from "@/components/BadgeModal";
@@ -89,11 +89,11 @@ export function TopBar() {
 
           <BadgeModal />
           <button
-            onClick={() => toggleMute?.()}
-            className="p-1.5 ml-2 rounded-full hover:bg-gray-100 text-gray-500 transition-colors"
-            title={isMuted ? "开启音效" : "关闭音效"}
+            onClick={toggleMute}
+            className="p-2 bg-white rounded-full shadow-sm text-gray-500 hover:text-indigo-600 transition-colors"
+            title={isMuted ? "开启音效与音乐" : "关闭音效与音乐"}
           >
-            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Music4 className="w-5 h-5" />}
           </button>
         </div>
       </div>

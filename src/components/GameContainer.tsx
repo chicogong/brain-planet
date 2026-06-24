@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowLeft, RefreshCw, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { playSound } from "@/lib/audio";
 
 interface GameContainerProps {
   title: string;
@@ -50,6 +51,11 @@ export function GameContainer({
   const textClass = classes[3];
   const bgSoftClass = classes[4];
 
+  const handleStart = () => {
+    playSound.toggleBGM();
+    onStart();
+  };
+
   return (
     <div className="flex flex-col items-center max-w-2xl mx-auto w-full">
       {/* Universal Top Bar */}
@@ -61,7 +67,7 @@ export function GameContainer({
           <h1 className="text-2xl font-black text-gray-800">{title}</h1>
         </div>
         <button 
-          onClick={onStart} 
+          onClick={handleStart} 
           className="p-2 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors"
           title="重新开始"
         >
@@ -77,7 +83,7 @@ export function GameContainer({
             <div className="text-6xl mb-6">{emojiIcon}</div>
             {idleContent}
             <button
-              onClick={onStart}
+              onClick={handleStart}
               className={`text-white font-bold text-xl py-4 px-12 rounded-full transition-all active:scale-95 active:translate-y-1 shadow-lg mt-8 ${btnClass}`}
             >
               开始挑战
@@ -146,7 +152,7 @@ export function GameContainer({
                 <Share2 className="w-5 h-5" /> 炫耀一下
               </button>
               <button
-                onClick={onStart}
+                onClick={handleStart}
                 className={`w-full text-white font-bold py-4 rounded-2xl transition-all active:scale-95 active:translate-y-1 shadow-lg ${btnClass}`}
               >
                 再来一次

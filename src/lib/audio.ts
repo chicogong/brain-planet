@@ -4,6 +4,10 @@ import { useUserStore } from "@/store/useUserStore";
 
 class AudioEngine {
   private static audioCtx: AudioContext | null = null;
+  private static bgmOscillators: OscillatorNode[] = [];
+  private static bgmGain: GainNode | null = null;
+  private static isBgmPlaying = false;
+  private static bgmInterval: NodeJS.Timeout | null = null;
 
   private static getContext() {
     if (typeof window === "undefined") return null;
@@ -26,6 +30,89 @@ class AudioEngine {
     if (typeof window === "undefined") return false;
     const state = useUserStore.getState();
     return !state.isMuted;
+  }
+
+  static toggleBGM() {
+    if (!this.canPlay()) {
+      this.stopBGM();
+      return;
+    }
+    
+    if (this.isBgmPlaying) return;
+    
+    const ctx = this.getContext();
+    if (!ctx) return;
+    
+    // Very gentle ambient procedural music (pentatonic scale)
+    const scale = [261.63, 293.66, 329.63, 392.00, 440.00]; // C4, D4, E4, G4, A4
+    
+    this.bgmGain = ctx.createGain();
+    this.bgmGain.gain.value = 0.03; // Very quiet background
+    this.bgmGain.connect(ctx.destination);
+    
+    this.isBgmPlaying = true;
+    
+    const playNote = () => {
+      if (!this.isBgmPlaying || !this.canPlay() || !this.bgmGain) {
+        if (this.bgmInterval) clearInterval(this.bgmInterval);
+        return;
+      }
+      
+      const freq = scale[Math.floor(Math.random() * scale.length)];
+      const osc = ctx.createOscillator();
+      const noteGain = ctx.createGain();
+      
+      osc.type = "sine";
+      osc.frequency.value = freq * (Math.random() > 0.5 ? 0.5 : 1); // Mix octaves
+      
+      // Soft attack and release
+      noteGain.gain.setValueAtTime(0, ctx.currentTime);
+      noteGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 2);
+      noteGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 6);
+      
+      osc.connect(noteGain);
+      noteGain.connect(this.bgmGain);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 6);
+      
+      this.bgmOscillators.push(osc);
+      
+      // Clean up old oscillators
+      setTimeout(() => {
+        const index = this.bgmOscillators.indexOf(osc);
+        if (index > -1) {
+          this.bgmOscillators.splice(index, 1);
+        }
+      }, 6000);
+    };
+    
+    // Play a note every 1-3 seconds
+    this.bgmInterval = setInterval(playNote, 2000);
+    playNote();
+  }
+  
+  static stopBGM() {
+    this.isBgmPlaying = false;
+    if (this.bgmInterval) {
+      clearInterval(this.bgmInterval);
+      this.bgmInterval = null;
+    }
+    
+    // Fade out smoothly
+    if (this.bgmGain && this.audioCtx) {
+      this.bgmGain.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 1);
+      setTimeout(() => {
+        this.bgmOscillators.forEach(osc => {
+          try { osc.stop(); } catch(e) {}
+        });
+        this.bgmOscillators = [];
+        if (this.bgmGain) {
+          this.bgmGain.disconnect();
+          this.bgmGain = null;
+        }
+      }, 1000);
+    }
   }
 
   static pop() {
@@ -109,6 +196,8 @@ export const playSound = {
   pop: () => AudioEngine.pop(),
   error: () => AudioEngine.error(),
   cheer: () => AudioEngine.cheer(),
+  toggleBGM: () => AudioEngine.toggleBGM(),
+  stopBGM: () => AudioEngine.stopBGM(),
 };
 
 export const vibrate = (pattern: number | number[] = 50) => {
