@@ -27,7 +27,7 @@ export function TopBar() {
           </span>
         </Link>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-1 sm:space-x-3">
           <button 
             onClick={async () => {
               const shareData = {
@@ -48,14 +48,14 @@ export function TopBar() {
             }}
             className="flex items-center bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-blue-100 transition-colors"
           >
-            <Share2 className="w-4 h-4 mr-1" />
-            分享
+            <Share2 className="w-4 h-4 sm:mr-1" />
+            <span className="hidden sm:inline">分享</span>
           </button>
-          <div className="flex items-center bg-orange-100 text-orange-600 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm">
-            <Flame className="w-4 h-4 mr-1" />
-            {streakDays ?? 0} 天
+          <div className="flex items-center bg-orange-100 text-orange-600 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm">
+            <Flame className="w-4 h-4 sm:mr-1" />
+            {streakDays ?? 0} <span className="hidden sm:inline ml-1">天</span>
           </div>
-          <div className="flex items-center bg-yellow-100 text-yellow-600 px-3 py-1.5 rounded-full text-sm font-bold shadow-sm">
+          <div className="flex items-center bg-yellow-100 text-yellow-600 px-2 sm:px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm">
             <Star className="w-4 h-4 mr-1 fill-yellow-600" />
             {points ?? 0}
           </div>
