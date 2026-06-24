@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useUserStore, AVAILABLE_BADGES } from "@/store/useUserStore";
 import { useStore } from "@/store/useStore";
 import Link from "next/link";
-import { ArrowLeft, Lock, BarChart3, Medal, Brain, Activity, Target } from "lucide-react";
+import { ArrowLeft, Lock, BarChart3, Medal, Brain, Activity, Target, Compass } from "lucide-react";
 import { games } from "@/data/games";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, PolarRadiusAxis, Tooltip } from "recharts";
 
 export default function ParentsDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,21 +81,41 @@ export default function ParentsDashboard() {
   }
 
   // Calculate radar chart / stats data
-  const categoryStats = {
+  const dimensionStats = {
     "逻辑思维": 0,
-    "空间认知": 0,
-    "反应训练": 0,
-    "记忆力": 0
+    "记忆认知": 0,
+    "专注反应": 0,
+    "空间观察": 0,
+    "艺术启蒙": 0,
+  };
+
+  const dimensionMapping: Record<string, keyof typeof dimensionStats> = {
+    "math-24": "逻辑思维",
+    "sudoku": "逻辑思维",
+    "pattern-master": "逻辑思维",
+    "memory": "记忆认知",
+    "color-match": "记忆认知",
+    "schulte": "专注反应",
+    "whack-a-mole": "专注反应",
+    "shadow-match": "空间观察",
+    "piano": "艺术启蒙"
   };
 
   Object.entries(gameStats).forEach(([gameId, count]) => {
-    const game = games.find(g => g.id === gameId);
-    if (game && game.category) {
-      if (categoryStats[game.category as keyof typeof categoryStats] !== undefined) {
-        categoryStats[game.category as keyof typeof categoryStats] += count;
-      }
+    const dim = dimensionMapping[gameId];
+    if (dim) {
+      dimensionStats[dim] += count;
     }
   });
+
+  const maxStat = Math.max(...Object.values(dimensionStats), 10);
+  const chartData = Object.entries(dimensionStats).map(([subject, val]) => ({
+    subject,
+    // Add a base value so the radar chart doesn't look empty when they just started
+    value: val + Math.floor(maxStat * 0.2), 
+    fullMark: maxStat * 1.2,
+    actual: val
+  }));
 
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto w-full px-4 pb-12">
@@ -129,6 +150,36 @@ export default function ParentsDashboard() {
           <Medal className="w-8 h-8 text-teal-500 mb-2" />
           <div className="text-3xl font-black text-gray-800">{unlockedBadges.length}</div>
           <div className="text-sm text-gray-500 font-medium">已解锁徽章</div>
+        </div>
+      </div>
+
+      {/* Radar Chart Section */}
+      <div className="w-full bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-sm mb-8">
+        <div className="flex items-center gap-2 mb-6">
+          <Compass className="w-6 h-6 text-indigo-500" />
+          <h2 className="text-xl font-bold text-gray-800">多元能力雷达图</h2>
+          <p className="text-sm text-gray-400 ml-auto hidden sm:block">基于各维度游戏的游玩频次综合测算</p>
+        </div>
+        <div className="w-full h-[300px] sm:h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
+              <PolarGrid stroke="#e5e7eb" />
+              <PolarAngleAxis dataKey="subject" tick={{ fill: '#4b5563', fontWeight: 'bold', fontSize: 14 }} />
+              <PolarRadiusAxis angle={30} domain={[0, 'dataMax']} tick={false} axisLine={false} />
+              <Tooltip 
+                formatter={(value: any, name: any, props: any) => [props.payload.actual + ' 次训练', '游玩频次']}
+                contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+              />
+              <Radar
+                name="能力值"
+                dataKey="value"
+                stroke="#6366f1"
+                fill="#818cf8"
+                fillOpacity={0.5}
+                activeDot={{ r: 6, fill: '#4f46e5' }}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
         </div>
       </div>
 
