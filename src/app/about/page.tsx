@@ -42,6 +42,9 @@ export default function AboutPage() {
             如果这个平台对你的孩子有所帮助，欢迎分享给更多的家长。
           </p>
           <div className="mt-4 flex gap-4">
+            <a href="https://kids.aimake.cc" target="_blank" className="inline-block bg-teal-50 text-teal-600 px-4 py-2 rounded-full font-bold hover:bg-teal-100 transition-colors">
+              官方访问地址
+            </a>
             <a href="https://chico.aimake.cc" target="_blank" className="inline-block bg-indigo-50 text-indigo-600 px-4 py-2 rounded-full font-bold hover:bg-indigo-100 transition-colors">
               了解作者 Chico
             </a>

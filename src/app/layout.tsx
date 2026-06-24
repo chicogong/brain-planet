@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "脑力星球 (Brain Planet)",
     images: [
       {
-        url: "https://kids.aimake.cc/icon.svg",
+        url: "https://kids.aimake.cc/logo.jpg",
         width: 800,
         height: 600,
         alt: "脑力星球 (Brain Planet)",
