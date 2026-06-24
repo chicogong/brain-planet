@@ -105,7 +105,7 @@ export default function RootLayout({
             </div>
             <div className="flex items-center gap-6">
               <a
-                href="https://chico.aimake.cc/"
+                href="https://chico.aimake.cc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-green-600 transition-colors font-medium"
@@ -116,7 +116,7 @@ export default function RootLayout({
                 href="/about"
                 className="hover:text-indigo-600 transition-colors font-medium flex items-center gap-1"
               >
-                关于星球
+                About kids.aimake.cc
               </Link>
               <a
                 href="https://github.com/chicogong/brain-planet"

@@ -120,4 +120,28 @@ export const ADVENTURE_LEVELS: AdventureLevel[] = [
     icon: "🎵",
     color: "bg-emerald-500",
   },
+  {
+    id: "level-15",
+    title: "幻影追踪者",
+    gameId: "space-tracker",
+    description: "在飞速移动的飞船中找到外星人。",
+    icon: "👽",
+    color: "bg-indigo-600",
+  },
+  {
+    id: "level-16",
+    title: "记忆回音谷",
+    gameId: "simon-says",
+    description: "听声辨位，记住宇宙的回响。",
+    icon: "🎵",
+    color: "bg-teal-600",
+  },
+  {
+    id: "level-17",
+    title: "情绪绿洲",
+    gameId: "emotion-match",
+    description: "用共情能力治愈情绪小怪兽！",
+    icon: "💖",
+    color: "bg-rose-500",
+  },
 ];

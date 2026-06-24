@@ -47,19 +47,20 @@
 | 游戏名称                                                                       | 推荐年龄 | 核心锻炼能力       | 图标 |
 | :----------------------------------------------------------------------------- | :------- | :----------------- | :--- |
 | **[平衡天平 (Balance Scale)](https://kids.aimake.cc/games/balance)**           | 4-8岁    | 具象数感、等式概念 | ⚖️   |
-| **[逻辑找规律 (Pattern Master)](https://kids.aimake.cc/games/pattern-master)** | 4-8岁    | 逻辑推理、序列归纳 | 🧩   |
+| **[逻辑找规律 (Pattern Master)](https://kids.aimake.cc/games/pattern-master)** | 4-8岁    | 逻辑推理、序列归纳 | 🔍   |
 | **[逻辑排序 (Story Sequencer)](https://kids.aimake.cc/games/sequence)**        | 4-8岁    | 叙事逻辑、因果推理 | ⏱️   |
 | **[星球数独 (Sudoku 4x4)](https://kids.aimake.cc/games/sudoku)**               | 6-9岁    | 逻辑推理、全局观   | 🧩   |
 | **[极限 24 点 (Math 24)](https://kids.aimake.cc/games/math-24)**               | 8-12岁   | 算术思维、快速心算 | 🧮   |
 
 ### 3. 反应与专注 (Focus & Reaction)
 
-| 游戏名称                                                                   | 推荐年龄 | 核心锻炼能力       | 图标 |
-| :------------------------------------------------------------------------- | :------- | :----------------- | :--- |
-| **[记忆翻牌 (Memory Match)](https://kids.aimake.cc/games/memory)**         | 3-8岁    | 短期记忆、空间定位 | 🦊   |
-| **[舒尔特方格 (Schulte Grid)](https://kids.aimake.cc/games/schulte)**      | 4-12岁   | 专注力、视觉追踪   | 👁️   |
-| **[萌宠打地鼠 (Whack-a-Mole)](https://kids.aimake.cc/games/whack-a-mole)** | 3-12岁   | 极速反应、手眼协调 | 🐹   |
-| **[星际迷宫 (Space Maze)](https://kids.aimake.cc/games/maze)**             | 5-10岁   | 空间规划、全局寻路 | 🛸   |
+| 游戏名称                                                                   | 推荐年龄 | 核心锻炼能力           | 图标 |
+| :------------------------------------------------------------------------- | :------- | :--------------------- | :--- |
+| **[记忆翻牌 (Memory Match)](https://kids.aimake.cc/games/memory)**         | 3-8岁    | 短期记忆、空间定位     | 🦊   |
+| **[舒尔特方格 (Schulte Grid)](https://kids.aimake.cc/games/schulte)**      | 4-12岁   | 专注力、视觉追踪       | 👁️   |
+| **[萌宠打地鼠 (Whack-a-Mole)](https://kids.aimake.cc/games/whack-a-mole)** | 3-12岁   | 极速反应、手眼协调     | 🐹   |
+| **[星际迷宫 (Space Maze)](https://kids.aimake.cc/games/maze)**             | 5-10岁   | 空间规划、全局寻路     | 🛸   |
+| **[星际追踪 (Space Tracker)](https://kids.aimake.cc/games/space-tracker)** | 4-10岁   | 动态视觉追踪、工作记忆 | 👽   |
 
 ### 4. 语言与艺术 (Language & Arts)
 
@@ -67,6 +68,13 @@
 | :------------------------------------------------------------------- | :------- | :----------------- | :--- |
 | **[看图拼词 (Word Match)](https://kids.aimake.cc/games/word-match)** | 4-8岁    | 词汇启蒙、字母认知 | 🅰️   |
 | **[魔法钢琴 (Magic Piano)](https://kids.aimake.cc/games/piano)**     | 3-10岁   | 音乐感知、自由弹奏 | 🎹   |
+| **[听音辨位 (Simon Says)](https://kids.aimake.cc/games/simon)**      | 4-12岁   | 听觉记忆、序列感知 | 🎵   |
+
+### 5. 情绪与社交 (EQ & Social)
+
+| 游戏名称                                                               | 推荐年龄 | 核心锻炼能力       | 图标 |
+| :--------------------------------------------------------------------- | :------- | :----------------- | :--- |
+| **[情绪小怪兽 (Emotion Match)](https://kids.aimake.cc/games/emotion)** | 3-8岁    | 情绪识别、共情能力 | 💖   |
 
 ---
 

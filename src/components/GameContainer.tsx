@@ -11,7 +11,19 @@ interface GameContainerProps {
   score?: number;
   timeLeft?: number;
   emojiIcon: string;
-  themeColor: "indigo" | "teal" | "orange" | "red" | "purple" | "blue" | "gray" | "green";
+  themeColor:
+    | "indigo"
+    | "teal"
+    | "orange"
+    | "red"
+    | "purple"
+    | "blue"
+    | "gray"
+    | "green"
+    | "rose"
+    | "fuchsia"
+    | "pink"
+    | "amber";
   idleContent: React.ReactNode;
   playingContent: React.ReactNode;
   onStart: () => void;
@@ -29,6 +41,11 @@ const colorMap = {
   blue: "bg-blue-500 hover:bg-blue-600 shadow-blue-500/30 text-blue-600 bg-blue-50",
   gray: "bg-gray-800 hover:bg-gray-900 shadow-gray-800/30 text-gray-800 bg-gray-100",
   green: "bg-green-500 hover:bg-green-600 shadow-green-500/30 text-green-600 bg-green-50",
+  rose: "bg-rose-500 hover:bg-rose-600 shadow-rose-500/30 text-rose-600 bg-rose-50",
+  fuchsia:
+    "bg-fuchsia-500 hover:bg-fuchsia-600 shadow-fuchsia-500/30 text-fuchsia-600 bg-fuchsia-50",
+  pink: "bg-pink-500 hover:bg-pink-600 shadow-pink-500/30 text-pink-600 bg-pink-50",
+  amber: "bg-amber-500 hover:bg-amber-600 shadow-amber-500/30 text-amber-600 bg-amber-50",
 };
 
 export function GameContainer({

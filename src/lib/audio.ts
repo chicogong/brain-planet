@@ -141,6 +141,28 @@ class AudioEngine {
     osc.stop(ctx.currentTime + 0.1);
   }
 
+  static playTone(freq: number, duration: number = 0.3) {
+    if (!this.canPlay()) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+    gainNode.gain.setValueAtTime(0, ctx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.05);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  }
+
   static error() {
     if (!this.canPlay()) return;
     const ctx = this.getContext();
@@ -199,6 +221,7 @@ export const playSound = {
   pop: () => AudioEngine.pop(),
   error: () => AudioEngine.error(),
   cheer: () => AudioEngine.cheer(),
+  playTone: (freq: number, duration?: number) => AudioEngine.playTone(freq, duration),
   toggleBGM: () => AudioEngine.toggleBGM(),
   stopBGM: () => AudioEngine.stopBGM(),
 };

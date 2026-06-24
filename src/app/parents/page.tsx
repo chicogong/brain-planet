@@ -236,7 +236,7 @@ export default function ParentsDashboard() {
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between text-sm mb-1">
-                          <span className="font-bold text-gray-700">{game?.title || gameId}</span>
+                          <span className="font-bold text-gray-700">{game?.name || gameId}</span>
                           <span className="text-gray-500 font-medium">{count} 次</span>
                         </div>
                         <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
