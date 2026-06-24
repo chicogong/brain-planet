@@ -19,7 +19,7 @@ export function TopBar() {
   }, [updateStreak]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center px-4 md:px-8 mx-auto justify-between max-w-5xl">
         <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
           <span className="font-bold text-2xl text-primary flex items-center gap-2">

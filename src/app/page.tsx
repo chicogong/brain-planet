@@ -94,6 +94,12 @@ export default function Home() {
           </motion.div>
         ))}
       </motion.div>
+
+      <div className="mt-12 flex justify-center">
+        <Link href="/parents" className="flex items-center gap-2 px-6 py-3 bg-purple-50 text-purple-600 rounded-full font-bold shadow-sm hover:bg-purple-100 transition-all active:scale-95">
+          <Lock className="w-4 h-4" /> 家长专属看板
+        </Link>
+      </div>
     </div>
   );
 }

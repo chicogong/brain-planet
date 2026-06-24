@@ -162,15 +162,19 @@ export default function MemoryGame() {
                 transition={{ duration: 0.4, type: "spring", stiffness: 260, damping: 20 }}
               >
                 {/* Back of card (visible when face down) */}
-                <div className="absolute w-full h-full backface-hidden bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl shadow-md border-4 border-white flex items-center justify-center">
+                <div 
+                  className="absolute w-full h-full bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl shadow-md border-4 border-white flex items-center justify-center"
+                  style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                >
                   <span className="text-white opacity-50 text-2xl font-black">?</span>
                 </div>
                 
                 {/* Front of card (visible when face up) */}
                 <div 
-                  className={`absolute w-full h-full backface-hidden rotate-y-180 bg-white rounded-2xl shadow-lg border-2 flex items-center justify-center text-5xl sm:text-6xl
+                  className={`absolute w-full h-full bg-white rounded-2xl shadow-lg border-2 flex items-center justify-center text-5xl sm:text-6xl
                     ${card.isMatched ? 'border-green-400 shadow-green-100' : 'border-gray-100'}
                   `}
+                  style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
                 >
                   <motion.div
                     animate={card.isMatched ? { scale: [1, 1.2, 1] } : {}}

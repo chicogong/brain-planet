@@ -4,17 +4,11 @@ import { useUserStore, AVAILABLE_BADGES } from "@/store/useUserStore";
 import { useStore } from "@/store/useStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 
 export function BadgeModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const unlockedBadges = useStore(useUserStore, (state) => state.unlockedBadges) || [];
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <>
@@ -28,7 +22,7 @@ export function BadgeModal() {
       </button>
 
       <AnimatePresence>
-        {isOpen && mounted && createPortal(
+        {isOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0 }}
@@ -90,8 +84,7 @@ export function BadgeModal() {
                 })}
               </div>
             </motion.div>
-          </div>,
-          document.body
+          </div>
         )}
       </AnimatePresence>
     </>
