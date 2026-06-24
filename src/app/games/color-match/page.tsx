@@ -17,17 +17,10 @@ export default function ColorMatchGame() {
   const [diffIndex, setDiffIndex] = useState(0);
   const [gridSize, setGridSize] = useState(2);
 
-  const {
-    gameState,
-    score,
-    timeLeft,
-    initGame,
-    handleCorrect,
-    handleWrong
-  } = useGameSession({
+  const { gameState, score, timeLeft, initGame, handleCorrect, handleWrong } = useGameSession({
     gameId: "color-match",
     durationSeconds: GAME_DURATION,
-    winCondition: () => false // Time-based, so never win by score
+    winCondition: () => false, // Time-based, so never win by score
   });
 
   const generateColors = useCallback((currentLevel: number) => {
@@ -39,14 +32,14 @@ export default function ColorMatchGame() {
     // Calculate difficulty (difference in lightness)
     // Level 1: 20% diff, Level 20: 2% diff
     const diff = Math.max(2, 20 - currentLevel * 0.8);
-    
+
     setBaseColor(`hsl(${h}, ${s}%, ${l}%)`);
     setDiffColor(`hsl(${h}, ${s}%, ${l + diff}%)`);
-    
+
     // Determine grid size based on level
     const newGridSize = Math.min(MAX_GRID, Math.floor((currentLevel + 1) / 2) + 1);
     setGridSize(newGridSize);
-    
+
     // Determine diff index
     setDiffIndex(Math.floor(Math.random() * (newGridSize * newGridSize)));
   }, []);
@@ -87,7 +80,8 @@ export default function ColorMatchGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">色彩发现者</h2>
           <p className="text-gray-500 max-w-sm mx-auto">
-            找出颜色不一样的那块方块！<br/>
+            找出颜色不一样的那块方块！
+            <br />
             随着等级提升，颜色差异会越来越小，非常考验你的视觉敏锐度哦。
           </p>
         </>
@@ -100,18 +94,18 @@ export default function ColorMatchGame() {
             </span>
           </div>
 
-          <motion.div 
+          <motion.div
             key="game"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="w-full max-w-md aspect-square mx-auto"
           >
-            <div 
-              className="w-full h-full grid gap-2 sm:gap-3" 
-              style={{ 
+            <div
+              className="w-full h-full grid gap-2 sm:gap-3"
+              style={{
                 gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
-                gridTemplateRows: `repeat(${gridSize}, minmax(0, 1fr))`
+                gridTemplateRows: `repeat(${gridSize}, minmax(0, 1fr))`,
               }}
             >
               {Array.from({ length: gridSize * gridSize }).map((_, i) => (

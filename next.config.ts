@@ -9,6 +9,9 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   output: process.env.GITHUB_ACTIONS ? "export" : undefined,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
 };
 
 export default withPWA(nextConfig);

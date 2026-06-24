@@ -11,8 +11,8 @@ const NOTES = [
   { name: "Re", color: "bg-orange-400", freq: 293.66 },
   { name: "Mi", color: "bg-yellow-400", freq: 329.63 },
   { name: "Fa", color: "bg-green-400", freq: 349.23 },
-  { name: "Sol", color: "bg-teal-400", freq: 392.00 },
-  { name: "La", color: "bg-blue-400", freq: 440.00 },
+  { name: "Sol", color: "bg-teal-400", freq: 392.0 },
+  { name: "La", color: "bg-blue-400", freq: 440.0 },
   { name: "Si", color: "bg-indigo-400", freq: 493.88 },
   { name: "Do", color: "bg-purple-400", freq: 523.25 },
 ];
@@ -21,9 +21,9 @@ export default function MagicPianoGame() {
   const [gameState, setGameState] = useState<"idle" | "playing" | "won">("idle");
   const [notesPlayed, setNotesPlayed] = useState(0);
   const [activeNote, setActiveNote] = useState<number | null>(null);
-  
+
   const audioCtxRef = useRef<AudioContext | null>(null);
-  
+
   const unlockBadge = useUserStore((state) => state.unlockBadge);
   const incrementGameStat = useUserStore((state) => state.incrementGameStat);
 
@@ -41,10 +41,10 @@ export default function MagicPianoGame() {
 
   const playNote = (index: number) => {
     setActiveNote(index);
-    setNotesPlayed(n => {
+    setNotesPlayed((n) => {
       const newCount = n + 1;
       if (newCount === 50) {
-        unlockBadge('music_pro');
+        unlockBadge("music_pro");
         setGameState("won");
       }
       return newCount;
@@ -61,7 +61,7 @@ export default function MagicPianoGame() {
 
       oscillator.type = "sine";
       oscillator.frequency.setValueAtTime(NOTES[index].freq, audioCtxRef.current.currentTime);
-      
+
       // Envelope to make it sound like a soft piano/bell
       gainNode.gain.setValueAtTime(0, audioCtxRef.current.currentTime);
       gainNode.gain.linearRampToValueAtTime(0.5, audioCtxRef.current.currentTime + 0.05);
@@ -99,7 +99,8 @@ export default function MagicPianoGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">魔法钢琴</h2>
           <p className="text-gray-500 max-w-sm mx-auto">
-            纯粹的音乐启蒙！不需要懂五线谱，随意点击彩虹琴键就能演奏出美妙的旋律。<br/>
+            纯粹的音乐启蒙！不需要懂五线谱，随意点击彩虹琴键就能演奏出美妙的旋律。
+            <br />
             弹奏 50 个音符即可解锁“小小莫扎特”徽章！
           </p>
         </>
@@ -127,10 +128,12 @@ export default function MagicPianoGame() {
                   activeNote === index ? note.color : "bg-white"
                 }`}
                 style={{
-                  transformOrigin: "top"
+                  transformOrigin: "top",
                 }}
               >
-                <span className={`font-bold text-lg sm:text-2xl mb-2 ${activeNote === index ? "text-white" : note.color.replace('bg-', 'text-')}`}>
+                <span
+                  className={`font-bold text-lg sm:text-2xl mb-2 ${activeNote === index ? "text-white" : note.color.replace("bg-", "text-")}`}
+                >
                   {note.name}
                 </span>
                 <span className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full mx-auto ${note.color}`} />

@@ -7,26 +7,121 @@ import { tts } from "@/lib/tts";
 import { GameContainer } from "@/components/GameContainer";
 import { useGameSession } from "@/hooks/useGameSession";
 
-const EMOJIS = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜', '🦟', '🦗', '🕷', '🦂', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊', '🐅', '豹', '🦓', '🦍', '🦧', '🐘', '🦛', '🦏', '🐪', '🐫', '🦒', '🦘', '🐃', '🐂', '🐄', '🐎', '🐖', '🐏', '🐑', '🦙', '🐐', '鹿', '🐕', '🐩', '🦮', '🐕‍🦺', '🐈', '🐈‍⬛', '🐓', '🦃', '🦚', '🦜', '🦢', '🦩', '🕊', '🐇', '🦝', '🦨', '🦡', '🦦', '🦥', '🐁', '🐀', '🐿', '🦔'];
+const EMOJIS = [
+  "🐶",
+  "🐱",
+  "🐭",
+  "🐹",
+  "🐰",
+  "🦊",
+  "🐻",
+  "🐼",
+  "🐨",
+  "🐯",
+  "🦁",
+  "🐮",
+  "🐷",
+  "🐸",
+  "🐵",
+  "🐔",
+  "🐧",
+  "🐦",
+  "🐤",
+  "🦆",
+  "🦅",
+  "🦉",
+  "🦇",
+  "🐺",
+  "🐗",
+  "🐴",
+  "🦄",
+  "🐝",
+  "🐛",
+  "🦋",
+  "🐌",
+  "🐞",
+  "🐜",
+  "🦟",
+  "🦗",
+  "🕷",
+  "🦂",
+  "🐢",
+  "🐍",
+  "🦎",
+  "🦖",
+  "🦕",
+  "🐙",
+  "🦑",
+  "🦐",
+  "🦞",
+  "🦀",
+  "🐡",
+  "🐠",
+  "🐟",
+  "🐬",
+  "🐳",
+  "🐋",
+  "🦈",
+  "🐊",
+  "🐅",
+  "豹",
+  "🦓",
+  "🦍",
+  "🦧",
+  "🐘",
+  "🦛",
+  "🦏",
+  "🐪",
+  "🐫",
+  "🦒",
+  "🦘",
+  "🐃",
+  "🐂",
+  "🐄",
+  "🐎",
+  "🐖",
+  "🐏",
+  "🐑",
+  "🦙",
+  "🐐",
+  "鹿",
+  "🐕",
+  "🐩",
+  "🦮",
+  "🐕‍🦺",
+  "🐈",
+  "🐈‍⬛",
+  "🐓",
+  "🦃",
+  "🦚",
+  "🦜",
+  "🦢",
+  "🦩",
+  "🕊",
+  "🐇",
+  "🦝",
+  "🦨",
+  "🦡",
+  "🦦",
+  "🦥",
+  "🐁",
+  "🐀",
+  "🐿",
+  "🦔",
+];
 
 export default function ShadowMatchGame() {
   const [targetEmoji, setTargetEmoji] = useState<string>("");
   const [options, setOptions] = useState<string[]>([]);
-  
+
   const unlockBadge = useUserStore((state) => state.unlockBadge);
 
-  const {
-    gameState,
-    totalCorrect,
-    correctStreak,
-    initGame,
-    handleCorrect,
-    handleWrong
-  } = useGameSession({
-    gameId: "shadow-match",
-    winCondition: (score, total) => total >= 15,
-    onWin: () => unlockBadge('shadow_wizard')
-  });
+  const { gameState, totalCorrect, correctStreak, initGame, handleCorrect, handleWrong } =
+    useGameSession({
+      gameId: "shadow-match",
+      winCondition: (score, total) => total >= 15,
+      onWin: () => unlockBadge("shadow_wizard"),
+    });
 
   const generateQuestion = useCallback(() => {
     const shuffled = [...EMOJIS].sort(() => 0.5 - Math.random());
@@ -72,7 +167,8 @@ export default function ShadowMatchGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">光影魔术手</h2>
           <p className="text-gray-500 max-w-sm mx-auto">
-            通过观察纯黑的影子轮廓，找出对应的真实图案。<br/>
+            通过观察纯黑的影子轮廓，找出对应的真实图案。
+            <br />
             完成 15 次挑战即可解锁魔术手徽章！
           </p>
         </>

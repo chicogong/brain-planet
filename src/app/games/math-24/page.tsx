@@ -23,12 +23,7 @@ export default function Math24Game() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [selectedOperator, setSelectedOperator] = useState<Operator>(null);
 
-  const {
-    gameState,
-    score,
-    initGame,
-    handleCorrect,
-  } = useGameSession({
+  const { gameState, score, initGame, handleCorrect } = useGameSession({
     gameId: "math-24",
     winCondition: (_, totalCorrect) => totalCorrect >= 1, // Win per puzzle
   });
@@ -57,7 +52,7 @@ export default function Math24Game() {
 
   const handleCardClick = (id: string) => {
     if (gameState !== "playing") return;
-    const card = cards.find(c => c.id === id);
+    const card = cards.find((c) => c.id === id);
     if (!card || card.used) return;
 
     if (selectedCardId === null) {
@@ -66,7 +61,7 @@ export default function Math24Game() {
       setSelectedCardId(null); // deselect
     } else if (selectedOperator) {
       // Execute operation
-      const card1 = cards.find(c => c.id === selectedCardId)!;
+      const card1 = cards.find((c) => c.id === selectedCardId)!;
       const card2 = card;
       let newValue = 0;
       let newExpr = "";
@@ -104,7 +99,7 @@ export default function Math24Game() {
           break;
       }
 
-      const newCards = cards.map(c => {
+      const newCards = cards.map((c) => {
         if (c.id === selectedCardId) {
           return { ...c, used: true };
         }
@@ -120,7 +115,7 @@ export default function Math24Game() {
       setSelectedOperator(null);
 
       // Check win condition
-      const activeCards = newCards.filter(c => !c.used);
+      const activeCards = newCards.filter((c) => !c.used);
       if (activeCards.length === 1 && Math.abs(activeCards[0].value - 24) < 0.001) {
         handleCorrect();
       }
@@ -139,7 +134,7 @@ export default function Math24Game() {
     }
   };
 
-  const finalExpression = cards.find(c => !c.used)?.expression;
+  const finalExpression = cards.find((c) => !c.used)?.expression;
 
   return (
     <GameContainer
@@ -155,9 +150,7 @@ export default function Math24Game() {
         finalExpression ? (
           <div className="bg-purple-50 rounded-2xl p-6 border-2 border-purple-100 text-center w-full">
             <p className="text-gray-500 mb-2">最终公式</p>
-            <p className="text-xl font-bold text-purple-700 break-words">
-              {finalExpression} = 24
-            </p>
+            <p className="text-xl font-bold text-purple-700 break-words">{finalExpression} = 24</p>
           </div>
         ) : null
       }
@@ -165,35 +158,42 @@ export default function Math24Game() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">极限 24 点</h2>
           <p className="text-gray-500 max-w-sm mx-auto mb-6">
-            通过加减乘除，把4个数字拼凑出结果为 24 的等式！<br/>考验逻辑与数学运算能力。
+            通过加减乘除，把4个数字拼凑出结果为 24 的等式！
+            <br />
+            考验逻辑与数学运算能力。
           </p>
         </>
       }
       playingContent={
         <div className="w-full flex flex-col items-center h-full max-w-md mx-auto">
           <div className="grid grid-cols-2 gap-4 mb-8 w-full">
-            {cards.map((card) => !card.used && (
-              <motion.div
-                key={card.id}
-                layoutId={card.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleCardClick(card.id)}
-                className={`
+            {cards.map(
+              (card) =>
+                !card.used && (
+                  <motion.div
+                    key={card.id}
+                    layoutId={card.id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleCardClick(card.id)}
+                    className={`
                   aspect-video flex flex-col items-center justify-center rounded-2xl cursor-pointer shadow-md border-b-4 transition-colors
-                  ${selectedCardId === card.id 
-                    ? "bg-purple-500 text-white border-purple-700" 
-                    : "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-200"}
+                  ${
+                    selectedCardId === card.id
+                      ? "bg-purple-500 text-white border-purple-700"
+                      : "bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-200"
+                  }
                 `}
-              >
-                <span className="text-4xl font-black">{card.value}</span>
-                {card.expression !== String(card.value) && (
-                  <span className="text-xs opacity-70 mt-1 truncate px-2 w-full text-center">
-                    {card.expression}
-                  </span>
-                )}
-              </motion.div>
-            ))}
+                  >
+                    <span className="text-4xl font-black">{card.value}</span>
+                    {card.expression !== String(card.value) && (
+                      <span className="text-xs opacity-70 mt-1 truncate px-2 w-full text-center">
+                        {card.expression}
+                      </span>
+                    )}
+                  </motion.div>
+                )
+            )}
           </div>
 
           {/* Operators */}
@@ -204,7 +204,7 @@ export default function Math24Game() {
                 size="icon"
                 variant={selectedOperator === op ? "default" : "outline"}
                 className={`w-14 h-14 rounded-full text-2xl font-bold shadow-sm
-                  ${selectedOperator === op ? 'bg-orange-500 hover:bg-orange-600 text-white border-none' : 'text-gray-600'}
+                  ${selectedOperator === op ? "bg-orange-500 hover:bg-orange-600 text-white border-none" : "text-gray-600"}
                 `}
                 onClick={() => setSelectedOperator(op as Operator)}
               >
@@ -215,7 +215,12 @@ export default function Math24Game() {
 
           {/* Toolbar */}
           <div className="mt-auto flex justify-between w-full">
-            <Button variant="ghost" className="text-gray-500 bg-white" onClick={handleUndo} disabled={history.length <= 1}>
+            <Button
+              variant="ghost"
+              className="text-gray-500 bg-white"
+              onClick={handleUndo}
+              disabled={history.length <= 1}
+            >
               <Undo className="w-5 h-5 mr-2" /> 撤销
             </Button>
             <Button variant="ghost" className="text-gray-500 bg-white" onClick={generatePuzzle}>

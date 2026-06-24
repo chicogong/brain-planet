@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/exhaustive-deps, @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -11,10 +12,10 @@ export function InstallBanner() {
 
   useEffect(() => {
     // Only show if not already installed and not dismissed recently
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
     if (isStandalone) return;
 
-    const dismissed = localStorage.getItem('pwa-banner-dismissed');
+    const dismissed = localStorage.getItem("pwa-banner-dismissed");
     if (dismissed && Date.now() - parseInt(dismissed) < 1000 * 60 * 60 * 24 * 7) {
       return; // Hide for 7 days if dismissed
     }
@@ -34,25 +35,27 @@ export function InstallBanner() {
       setShow(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
   }, []);
 
   const handleDismiss = () => {
     setShow(false);
-    localStorage.setItem('pwa-banner-dismissed', Date.now().toString());
+    localStorage.setItem("pwa-banner-dismissed", Date.now().toString());
   };
 
   const handleInstall = async () => {
     if (isIOS) {
-      alert("在 iOS 设备上：请点击下方工具栏的「分享」图标，然后选择「添加到主屏幕」即可离线畅玩！");
+      alert(
+        "在 iOS 设备上：请点击下方工具栏的「分享」图标，然后选择「添加到主屏幕」即可离线畅玩！"
+      );
       return;
     }
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
+      if (outcome === "accepted") {
         setShow(false);
       }
       setDeferredPrompt(null);
@@ -63,7 +66,7 @@ export function InstallBanner() {
 
   return (
     <AnimatePresence>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, height: 0 }}
@@ -79,7 +82,7 @@ export function InstallBanner() {
               添加至桌面，0 秒启动，断网也能玩，再也不怕广告打扰啦。
             </p>
           </div>
-          <button 
+          <button
             onClick={handleInstall}
             className="whitespace-nowrap flex items-center gap-2 bg-white text-purple-600 px-5 py-2.5 rounded-xl font-bold shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
           >

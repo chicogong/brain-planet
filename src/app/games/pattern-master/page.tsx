@@ -7,15 +7,25 @@ import { useGameSession } from "@/hooks/useGameSession";
 import { vibrate } from "@/lib/audio";
 import { tts } from "@/lib/tts";
 
-const EMOJIS = ['🍎', '🍌', '🍇', '🍉', '🍓', '🚗', '✈️', '🚀', '🐶', '🐱', '🐰', '🐼', '⚽', '🏀', '⭐', '🎈'];
-const PATTERNS = [
-  "ABABAB",
-  "AABBAA",
-  "ABCABC",
-  "ABBABB",
-  "AABAA",
-  "AABCAABC"
+const EMOJIS = [
+  "🍎",
+  "🍌",
+  "🍇",
+  "🍉",
+  "🍓",
+  "🚗",
+  "✈️",
+  "🚀",
+  "🐶",
+  "🐱",
+  "🐰",
+  "🐼",
+  "⚽",
+  "🏀",
+  "⭐",
+  "🎈",
 ];
+const PATTERNS = ["ABABAB", "AABBAA", "ABCABC", "ABBABB", "AABAA", "AABCAABC"];
 
 interface Question {
   sequence: string[];
@@ -26,51 +36,45 @@ interface Question {
 export default function PatternMasterGame() {
   const [question, setQuestion] = useState<Question | null>(null);
 
-  const {
-    gameState,
-    totalCorrect,
-    correctStreak,
-    initGame,
-    handleCorrect,
-    handleWrong,
-  } = useGameSession({
-    gameId: "pattern-master",
-    winCondition: (_, totalCorrect) => totalCorrect >= 10,
-  });
+  const { gameState, totalCorrect, correctStreak, initGame, handleCorrect, handleWrong } =
+    useGameSession({
+      gameId: "pattern-master",
+      winCondition: (_, totalCorrect) => totalCorrect >= 10,
+    });
 
   const generateQuestion = useCallback(() => {
     // Pick a random pattern
     const patternStr = PATTERNS[Math.floor(Math.random() * PATTERNS.length)];
-    
+
     // Pick unique emojis for A, B, C
     const shuffledEmojis = [...EMOJIS].sort(() => 0.5 - Math.random());
     const emojiMap: Record<string, string> = {
-      'A': shuffledEmojis[0],
-      'B': shuffledEmojis[1],
-      'C': shuffledEmojis[2],
+      A: shuffledEmojis[0],
+      B: shuffledEmojis[1],
+      C: shuffledEmojis[2],
     };
 
     // Construct full sequence
-    const fullSeq = patternStr.split('').map(char => emojiMap[char]);
-    
+    const fullSeq = patternStr.split("").map((char) => emojiMap[char]);
+
     // The last item is the answer
     const answer = fullSeq[fullSeq.length - 1];
-    
+
     // Sequence to show (last item replaced with ?)
     const sequenceToShow = [...fullSeq];
-    sequenceToShow[sequenceToShow.length - 1] = '?';
+    sequenceToShow[sequenceToShow.length - 1] = "?";
 
     // Generate options (1 correct, 3 wrong)
     const options = new Set<string>();
     options.add(answer);
-    while(options.size < 4) {
+    while (options.size < 4) {
       options.add(shuffledEmojis[Math.floor(Math.random() * shuffledEmojis.length)]);
     }
 
     setQuestion({
       sequence: sequenceToShow,
       answer,
-      options: Array.from(options).sort(() => 0.5 - Math.random())
+      options: Array.from(options).sort(() => 0.5 - Math.random()),
     });
   }, []);
 
@@ -112,7 +116,8 @@ export default function PatternMasterGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">大侦探福尔摩斯</h2>
           <p className="text-gray-500 max-w-sm mx-auto mb-6">
-            观察图案的排列规律，找出问号处缺失的正确图案。<br/>
+            观察图案的排列规律，找出问号处缺失的正确图案。
+            <br />
             连续答对 10 题即可通关解锁徽章！
           </p>
         </>
@@ -140,9 +145,9 @@ export default function PatternMasterGame() {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: idx * 0.1 }}
                       className={`w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center text-4xl md:text-5xl rounded-2xl ${
-                        item === '?' 
-                          ? 'bg-white border-4 border-dashed border-gray-300 text-gray-300 shadow-inner' 
-                          : 'bg-white shadow-md'
+                        item === "?"
+                          ? "bg-white border-4 border-dashed border-gray-300 text-gray-300 shadow-inner"
+                          : "bg-white shadow-md"
                       }`}
                     >
                       {item}

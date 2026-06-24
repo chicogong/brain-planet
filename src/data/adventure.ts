@@ -1,0 +1,123 @@
+export interface AdventureLevel {
+  id: string;
+  title: string;
+  gameId: string;
+  description: string;
+  icon: string;
+  color: string;
+}
+
+export const ADVENTURE_LEVELS: AdventureLevel[] = [
+  {
+    id: "level-1",
+    title: "色彩初探",
+    gameId: "color-match",
+    description: "消除相同的颜色，开启星际之旅！",
+    icon: "🎨",
+    color: "bg-pink-500",
+  },
+  {
+    id: "level-2",
+    title: "分类小达人",
+    gameId: "sorting",
+    description: "帮小动物和水果找到自己的家！",
+    icon: "🍎",
+    color: "bg-orange-500",
+  },
+  {
+    id: "level-3",
+    title: "看图拼词",
+    gameId: "word-match",
+    description: "拼出正确的单词，补全语言的碎片。",
+    icon: "🅰️",
+    color: "bg-blue-500",
+  },
+  {
+    id: "level-4",
+    title: "平衡天平",
+    gameId: "balance",
+    description: "在天平上建立数字与重量的感知。",
+    icon: "⚖️",
+    color: "bg-teal-500",
+  },
+  {
+    id: "level-5",
+    title: "记忆星丛",
+    gameId: "memory",
+    description: "翻开卡片，记住宇宙的倒影。",
+    icon: "🧠",
+    color: "bg-purple-500",
+  },
+  {
+    id: "level-6",
+    title: "逻辑排序",
+    gameId: "sequence",
+    description: "把事物按时间顺序排好，理解因果！",
+    icon: "⏱️",
+    color: "bg-amber-500",
+  },
+  {
+    id: "level-7",
+    title: "专注陨石带",
+    gameId: "schulte",
+    description: "在陨石群中快速找到顺序数字。",
+    icon: "👁️",
+    color: "bg-teal-500",
+  },
+  {
+    id: "level-4",
+    title: "逻辑前哨站",
+    gameId: "sudoku",
+    description: "用逻辑填补缺失的能量矩阵。",
+    icon: "🧩",
+    color: "bg-indigo-500",
+  },
+  {
+    id: "level-5",
+    title: "暗影峡谷",
+    gameId: "shadow-match",
+    description: "找到隐藏在暗影中的匹配物体。",
+    icon: "🦇",
+    color: "bg-gray-800",
+  },
+  {
+    id: "level-9",
+    title: "星际迷宫",
+    gameId: "maze",
+    description: "控制飞船找到能量核心！",
+    icon: "🛸",
+    color: "bg-purple-600",
+  },
+  {
+    id: "level-10",
+    title: "极速保卫战",
+    gameId: "whack-a-mole",
+    description: "快速击退来袭的星际地鼠！",
+    icon: "⚡",
+    color: "bg-red-500",
+  },
+  {
+    id: "level-12",
+    title: "规律裂隙",
+    gameId: "pattern-master",
+    description: "找出现象背后的宇宙规律。",
+    icon: "🌌",
+    color: "bg-teal-500",
+  },
+  {
+    id: "level-13",
+    title: "数学黑洞",
+    gameId: "math-24",
+    description: "用四则运算破解黑洞的 24 引力！",
+    icon: "🧮",
+    color: "bg-yellow-500",
+  },
+  {
+    id: "level-14",
+    title: "星际音乐厅",
+    gameId: "piano",
+    description: "用音乐点亮最终的星球！",
+    icon: "🎵",
+    color: "bg-emerald-500",
+  },
+];

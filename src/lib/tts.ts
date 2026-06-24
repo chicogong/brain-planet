@@ -7,13 +7,16 @@ class TTSEngine {
   private static initVoice() {
     if (!this.synth) return;
     const voices = this.synth.getVoices();
-    const zhVoices = voices.filter(v => v.lang.startsWith('zh'));
-    this.voice = zhVoices.find(v => v.name.includes('Ting-Ting') || v.name.includes('Google')) || zhVoices[0] || null;
+    const zhVoices = voices.filter((v) => v.lang.startsWith("zh"));
+    this.voice =
+      zhVoices.find((v) => v.name.includes("Ting-Ting") || v.name.includes("Google")) ||
+      zhVoices[0] ||
+      null;
   }
 
   static speak(text: string) {
     if (!this.synth) return;
-    
+
     const state = useUserStore.getState();
     // Do not speak if globally muted
     if (state.isMuted) return;
@@ -31,7 +34,7 @@ class TTSEngine {
 
     const utterance = new SpeechSynthesisUtterance(text);
     if (this.voice) utterance.voice = this.voice;
-    
+
     // Friendly, slightly slower speech rate for kids
     utterance.rate = 0.9;
     utterance.pitch = 1.1;

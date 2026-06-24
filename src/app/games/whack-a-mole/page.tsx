@@ -13,24 +13,20 @@ type EntityType = "none" | "mole" | "bomb";
 export default function WhackAMoleGame() {
   const [customScore, setCustomScore] = useState(0);
   const [holes, setHoles] = useState<EntityType[]>(Array(9).fill("none"));
-  
+
   const unlockBadge = useUserStore((state) => state.unlockBadge);
   const spawnerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const {
-    gameState,
-    timeLeft,
-    initGame,
-  } = useGameSession({
+  const { gameState, timeLeft, initGame } = useGameSession({
     gameId: "whack-a-mole",
     durationSeconds: 30,
     winCondition: () => false, // time-based game
     onWin: () => {
       // Badge logic
       if (customScore >= 500) {
-        unlockBadge('whack_100');
+        unlockBadge("whack_100");
       }
-    }
+    },
   });
 
   const handleStart = () => {
@@ -45,27 +41,31 @@ export default function WhackAMoleGame() {
       spawnerRef.current = setInterval(() => {
         setHoles((prev) => {
           const newHoles = [...prev];
-          
+
           // clear existing
-          const activeIndices = newHoles.map((h, i) => h !== "none" ? i : -1).filter(i => i !== -1);
+          const activeIndices = newHoles
+            .map((h, i) => (h !== "none" ? i : -1))
+            .filter((i) => i !== -1);
           if (activeIndices.length > 2) {
             // randomly remove one to keep board clean
             newHoles[activeIndices[Math.floor(Math.random() * activeIndices.length)]] = "none";
           }
 
           // spawn new
-          const emptyIndices = newHoles.map((h, i) => h === "none" ? i : -1).filter(i => i !== -1);
+          const emptyIndices = newHoles
+            .map((h, i) => (h === "none" ? i : -1))
+            .filter((i) => i !== -1);
           if (emptyIndices.length > 0) {
             const spawnIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
             // 20% chance bomb, 80% mole
             newHoles[spawnIndex] = Math.random() > 0.8 ? "bomb" : "mole";
           }
-          
+
           return newHoles;
         });
       }, 700);
     }
-    
+
     return () => {
       if (spawnerRef.current) clearInterval(spawnerRef.current);
     };
@@ -73,7 +73,7 @@ export default function WhackAMoleGame() {
 
   const whack = (index: number) => {
     if (gameState !== "playing") return;
-    
+
     const entity = holes[index];
     if (entity === "none") return;
 
@@ -109,8 +109,10 @@ export default function WhackAMoleGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">准备好拼手速了吗？</h2>
           <p className="text-gray-500 max-w-sm mx-auto mb-6 text-center">
-            敲击探出头的地鼠 (+20分)<br/>
-            千万别碰到炸弹 (-30分)<br/>
+            敲击探出头的地鼠 (+20分)
+            <br />
+            千万别碰到炸弹 (-30分)
+            <br />
             时间限制 30 秒，超过 500 分可解锁神秘徽章！
           </p>
         </>
@@ -119,7 +121,10 @@ export default function WhackAMoleGame() {
         <div className="w-full flex justify-center mt-8">
           <div className="grid grid-cols-3 gap-3 bg-green-500/10 p-4 rounded-3xl w-full max-w-[400px]">
             {holes.map((entity, i) => (
-              <div key={i} className="relative w-full aspect-square bg-gray-900/10 rounded-2xl overflow-hidden border-b-4 border-gray-900/20">
+              <div
+                key={i}
+                className="relative w-full aspect-square bg-gray-900/10 rounded-2xl overflow-hidden border-b-4 border-gray-900/20"
+              >
                 <div className="absolute bottom-0 w-full h-1/3 bg-gray-900/30 rounded-t-full" />
                 <AnimatePresence>
                   {entity !== "none" && (

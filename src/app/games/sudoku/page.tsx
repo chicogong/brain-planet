@@ -11,34 +11,48 @@ import { tts } from "@/lib/tts";
 
 // Predefined 4x4 solutions
 const SOLUTIONS = [
-  [
-    1, 2, 3, 4,
-    3, 4, 1, 2,
-    2, 1, 4, 3,
-    4, 3, 2, 1
-  ],
-  [
-    4, 1, 2, 3,
-    2, 3, 4, 1,
-    3, 4, 1, 2,
-    1, 2, 3, 4
-  ]
+  [1, 2, 3, 4, 3, 4, 1, 2, 2, 1, 4, 3, 4, 3, 2, 1],
+  [4, 1, 2, 3, 2, 3, 4, 1, 3, 4, 1, 2, 1, 2, 3, 4],
 ];
 
 // Provide masks (true = show initial, false = empty)
 const MASKS = [
   [
-    true, false, false, true,
-    false, true, true, false,
-    false, true, true, false,
-    true, false, false, true
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
   ],
   [
-    false, true, true, false,
-    true, false, false, true,
-    true, false, false, true,
-    false, true, true, false
-  ]
+    false,
+    true,
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    true,
+    false,
+  ],
 ];
 
 interface Cell {
@@ -53,13 +67,7 @@ export default function SudokuGame() {
   const [solution, setSolution] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
 
-  const {
-    gameState,
-    score,
-    initGame,
-    handleCorrect,
-    handleWrong
-  } = useGameSession({
+  const { gameState, score, initGame, handleCorrect, handleWrong } = useGameSession({
     gameId: "sudoku",
     winCondition: (_, totalCorrect) => totalCorrect >= 1, // Win per puzzle
   });
@@ -74,7 +82,7 @@ export default function SudokuGame() {
     const idx = Math.floor(Math.random() * SOLUTIONS.length);
     const sol = SOLUTIONS[idx];
     const mask = MASKS[idx];
-    
+
     // Add some extra random hiding to make it slightly different
     const currentMask = mask.map((m) => m && Math.random() > 0.2);
 
@@ -144,7 +152,8 @@ export default function SudokuGame() {
         <>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">星球数独</h2>
           <p className="text-gray-500 max-w-sm mx-auto mb-6">
-            填满 1-4，保证每行每列不重复！<br/>
+            填满 1-4，保证每行每列不重复！
+            <br />
             这是锻炼逻辑推理能力的绝佳游戏。
           </p>
         </>
@@ -156,7 +165,7 @@ export default function SudokuGame() {
             {board.map((cell, i) => {
               const isRightEdge = i % 4 === 1;
               const isBottomEdge = Math.floor(i / 4) === 1;
-              
+
               return (
                 <div
                   key={i}
@@ -189,10 +198,14 @@ export default function SudokuGame() {
               </Button>
             ))}
           </div>
-          
+
           {/* Actions */}
           <div className="flex justify-between w-full max-w-[280px]">
-            <Button variant="ghost" className="text-gray-500 bg-white" onClick={() => handleNumberInput(null)}>
+            <Button
+              variant="ghost"
+              className="text-gray-500 bg-white"
+              onClick={() => handleNumberInput(null)}
+            >
               <Eraser className="w-5 h-5 mr-1" /> 擦除
             </Button>
             <Button variant="ghost" className="text-gray-500 bg-white" onClick={generatePuzzle}>

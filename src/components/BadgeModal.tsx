@@ -74,7 +74,9 @@ export function BadgeModal() {
                         {badge.icon}
                       </div>
                       <div>
-                        <h4 className={`font-bold ${isUnlocked ? "text-gray-800" : "text-gray-500"}`}>
+                        <h4
+                          className={`font-bold ${isUnlocked ? "text-gray-800" : "text-gray-500"}`}
+                        >
                           {badge.name}
                         </h4>
                         <p className="text-xs text-gray-400 mt-1">{badge.description}</p>

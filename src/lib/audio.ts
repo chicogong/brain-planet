@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useUserStore } from "@/store/useUserStore";
@@ -20,7 +21,7 @@ class AudioEngine {
       }
     }
     // Resume context if suspended (browser auto-play policy)
-    if (this.audioCtx && this.audioCtx.state === 'suspended') {
+    if (this.audioCtx && this.audioCtx.state === "suspended") {
       this.audioCtx.resume();
     }
     return this.audioCtx;
@@ -37,47 +38,47 @@ class AudioEngine {
       this.stopBGM();
       return;
     }
-    
+
     if (this.isBgmPlaying) return;
-    
+
     const ctx = this.getContext();
     if (!ctx) return;
-    
+
     // Very gentle ambient procedural music (pentatonic scale)
-    const scale = [261.63, 293.66, 329.63, 392.00, 440.00]; // C4, D4, E4, G4, A4
-    
+    const scale = [261.63, 293.66, 329.63, 392.0, 440.0]; // C4, D4, E4, G4, A4
+
     this.bgmGain = ctx.createGain();
     this.bgmGain.gain.value = 0.03; // Very quiet background
     this.bgmGain.connect(ctx.destination);
-    
+
     this.isBgmPlaying = true;
-    
+
     const playNote = () => {
       if (!this.isBgmPlaying || !this.canPlay() || !this.bgmGain) {
         if (this.bgmInterval) clearInterval(this.bgmInterval);
         return;
       }
-      
+
       const freq = scale[Math.floor(Math.random() * scale.length)];
       const osc = ctx.createOscillator();
       const noteGain = ctx.createGain();
-      
+
       osc.type = "sine";
       osc.frequency.value = freq * (Math.random() > 0.5 ? 0.5 : 1); // Mix octaves
-      
+
       // Soft attack and release
       noteGain.gain.setValueAtTime(0, ctx.currentTime);
       noteGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 2);
       noteGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 6);
-      
+
       osc.connect(noteGain);
       noteGain.connect(this.bgmGain);
-      
+
       osc.start();
       osc.stop(ctx.currentTime + 6);
-      
+
       this.bgmOscillators.push(osc);
-      
+
       // Clean up old oscillators
       setTimeout(() => {
         const index = this.bgmOscillators.indexOf(osc);
@@ -86,25 +87,27 @@ class AudioEngine {
         }
       }, 6000);
     };
-    
+
     // Play a note every 1-3 seconds
     this.bgmInterval = setInterval(playNote, 2000);
     playNote();
   }
-  
+
   static stopBGM() {
     this.isBgmPlaying = false;
     if (this.bgmInterval) {
       clearInterval(this.bgmInterval);
       this.bgmInterval = null;
     }
-    
+
     // Fade out smoothly
     if (this.bgmGain && this.audioCtx) {
       this.bgmGain.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 1);
       setTimeout(() => {
-        this.bgmOscillators.forEach(osc => {
-          try { osc.stop(); } catch(e) {}
+        this.bgmOscillators.forEach((osc) => {
+          try {
+            osc.stop();
+          } catch (e) {}
         });
         this.bgmOscillators = [];
         if (this.bgmGain) {
@@ -169,23 +172,23 @@ class AudioEngine {
     // Simple arpeggio for cheer
     const notes = [440, 554.37, 659.25, 880]; // A4, C#5, E5, A5
     const duration = 0.15;
-    
+
     notes.forEach((freq, i) => {
       const osc = ctx.createOscillator();
       const gainNode = ctx.createGain();
-      
+
       osc.type = "triangle";
       const startTime = ctx.currentTime + i * duration;
-      
+
       osc.frequency.setValueAtTime(freq, startTime);
-      
+
       gainNode.gain.setValueAtTime(0, startTime);
       gainNode.gain.linearRampToValueAtTime(0.3, startTime + 0.02);
       gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
-      
+
       osc.connect(gainNode);
       gainNode.connect(ctx.destination);
-      
+
       osc.start(startTime);
       osc.stop(startTime + duration);
     });

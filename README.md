@@ -9,6 +9,8 @@
     <img src="https://img.shields.io/badge/PWA-Ready-5a0fc8?style=for-the-badge&logo=pwa" alt="PWA Ready" />
     <img src="https://img.shields.io/badge/SEO-Optimized-ff69b4?style=for-the-badge&logo=google" alt="SEO Optimized" />
     <img src="https://img.shields.io/badge/Privacy-100%25_Local-blue?style=for-the-badge&logo=shield" alt="Privacy First" />
+    <a href="https://github.com/chicogong/brain-planet/actions/workflows/cloudflare.yml"><img src="https://img.shields.io/github/actions/workflow/status/chicogong/brain-planet/cloudflare.yml?style=for-the-badge&label=Cloudflare%20Pages" alt="CI Status" /></a>
+    <a href="https://github.com/chicogong/brain-planet/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="MIT License" /></a>
   </p>
 </div>
 
@@ -18,34 +20,59 @@
 
 做一个**无广告、无内购、无需登陆**的纯净早教平台。通过现代化的 Web 架构，提供媲美原生 App 的沉浸式体验。
 
-### 🔐 极致的隐私安全
-- **零后端依赖**：本项目**不包含任何后端数据库或数据收集脚本**。
-- **本地持久化**：玩家的所有积分、游戏进度均通过 `Zustand + localStorage` 存储在设备本地。
+### 🔐 极致的隐私安全与高性能
 
-### ⚡ 随时随地，离线游玩 (PWA)
-- 在移动端 Safari 或 Chrome 中点击**“添加到主屏幕”**。
-- 无论是在高铁隧道还是飞机上，只要缓存过一次，断网也可随时畅玩！
+- **🎶 沉浸式引擎**：纯前端生成的环境背景音（BGM），零体积不耗流。
+- **📊 家长数据中心**：基于 `recharts` 的可视化五维能力雷达图，时刻掌握孩子成长轨迹。
+- **🚀 星际冒险地图**：多达 14 关的进阶路线，完美覆盖幼小衔接的核心能力。
+- **⚡ 离线游玩**：在移动端 Safari 或 Chrome 中点击**“添加到主屏幕”**，无论是在高铁隧道还是飞机上，只要缓存过一次，断网也可随时畅玩！
+- **✨ 极速性能**：深度优化的 Next.js 构建，静态导出，资源按需懒加载。
 
 ---
 
-## 🎮 游戏矩阵 (Game Matrix)
+## 🎮 14 大核心游戏矩阵 (Game Matrix)
 
-| 游戏星系 | 推荐年龄 | 核心锻炼能力 | 教育体系对标 | 状态 |
-| :--- | :--- | :--- | :--- | :--- |
-| **🎨 色彩发现者 (Color Match)** | 3-6岁 | 色彩感知、专注力 | 视觉辨别期 | ✅ 已上线 |
-| **🦇 影子匹配 (Shadow Match)** | 2-5岁 | 空间想象、轮廓提取 | 蒙特梭利教具 | ✅ 已上线 |
-| **🧠 记忆翻牌 (Memory Match)** | 3-8岁 | 短期记忆、空间定位 | 右脑开发 | ✅ 已上线 |
-| **🧩 逻辑找规律 (Pattern Master)**| 4-8岁 | 逻辑推理、序列归纳 | 斑马思维/OLSAT | ✅ 已上线 |
-| **🧮 极限 24 点 (Math 24)** | 8-12岁 | 算术思维、快速心算 | 数学培优 | ✅ 已上线 |
-| **🔢 星球数独 (Sudoku 4x4)** | 6-9岁 | 逻辑推理、全局观 | 奥数启蒙 | ✅ 已上线 |
-| **👀 舒尔特方格 (Schulte Grid)**| 4-12岁 | 专注力、视觉追踪 | 飞行员/速读训练 | ✅ 已上线 |
-| **🐹 萌宠打地鼠 (Whack-a-Mole)** | 3-12岁 | 极速反应、手眼协调 | 感觉统合训练 | ✅ 已上线 |
+我们的游戏库已经扩充到 **14 款**，涵盖了从蒙氏基础启蒙到高阶数理逻辑的全方位训练：
+
+### 1. 蒙氏启蒙 (Montessori Core)
+
+| 游戏名称                                                                 | 推荐年龄 | 核心锻炼能力       | 图标 |
+| :----------------------------------------------------------------------- | :------- | :----------------- | :--- |
+| **[色彩发现者 (Color Match)](https://kids.aimake.cc/games/color-match)** | 3-6岁    | 色彩感知、专注力   | 🎨   |
+| **[影子匹配 (Shadow Match)](https://kids.aimake.cc/games/shadow-match)** | 2-5岁    | 空间想象、轮廓反推 | 🦇   |
+| **[分类小达人 (Sorting Master)](https://kids.aimake.cc/games/sorting)**  | 3-6岁    | 逻辑归类、多维属性 | 🍎   |
+
+### 2. 数学与思维 (Math & Logic)
+
+| 游戏名称                                                                       | 推荐年龄 | 核心锻炼能力       | 图标 |
+| :----------------------------------------------------------------------------- | :------- | :----------------- | :--- |
+| **[平衡天平 (Balance Scale)](https://kids.aimake.cc/games/balance)**           | 4-8岁    | 具象数感、等式概念 | ⚖️   |
+| **[逻辑找规律 (Pattern Master)](https://kids.aimake.cc/games/pattern-master)** | 4-8岁    | 逻辑推理、序列归纳 | 🧩   |
+| **[逻辑排序 (Story Sequencer)](https://kids.aimake.cc/games/sequence)**        | 4-8岁    | 叙事逻辑、因果推理 | ⏱️   |
+| **[星球数独 (Sudoku 4x4)](https://kids.aimake.cc/games/sudoku)**               | 6-9岁    | 逻辑推理、全局观   | 🧩   |
+| **[极限 24 点 (Math 24)](https://kids.aimake.cc/games/math-24)**               | 8-12岁   | 算术思维、快速心算 | 🧮   |
+
+### 3. 反应与专注 (Focus & Reaction)
+
+| 游戏名称                                                                   | 推荐年龄 | 核心锻炼能力       | 图标 |
+| :------------------------------------------------------------------------- | :------- | :----------------- | :--- |
+| **[记忆翻牌 (Memory Match)](https://kids.aimake.cc/games/memory)**         | 3-8岁    | 短期记忆、空间定位 | 🦊   |
+| **[舒尔特方格 (Schulte Grid)](https://kids.aimake.cc/games/schulte)**      | 4-12岁   | 专注力、视觉追踪   | 👁️   |
+| **[萌宠打地鼠 (Whack-a-Mole)](https://kids.aimake.cc/games/whack-a-mole)** | 3-12岁   | 极速反应、手眼协调 | 🐹   |
+| **[星际迷宫 (Space Maze)](https://kids.aimake.cc/games/maze)**             | 5-10岁   | 空间规划、全局寻路 | 🛸   |
+
+### 4. 语言与艺术 (Language & Arts)
+
+| 游戏名称                                                             | 推荐年龄 | 核心锻炼能力       | 图标 |
+| :------------------------------------------------------------------- | :------- | :----------------- | :--- |
+| **[看图拼词 (Word Match)](https://kids.aimake.cc/games/word-match)** | 4-8岁    | 词汇启蒙、字母认知 | 🅰️   |
+| **[魔法钢琴 (Magic Piano)](https://kids.aimake.cc/games/piano)**     | 3-10岁   | 音乐感知、自由弹奏 | 🎹   |
 
 ---
 
 ## 🏗 企业级技术底座 (Infrastructure)
 
-这是一个拥有企业级基础设施的开源项目，非常适合用作 Next.js 生产环境的学习范例。
+这是一个拥有企业级基础设施的开源项目，包含了前端工程化的最佳实践：
 
 ```mermaid
 graph TD;
@@ -58,30 +85,20 @@ graph TD;
     C --> H((离线断网支持));
 ```
 
-### 🔍 顶级 SEO 优化
+### 🔍 顶级 SEO 优化与性能
+
 - 内置自动化 `sitemap.xml` 与 `robots.txt`。
-- 采用 JSON-LD 注入 `EducationalGame` Schema 结构化数据，百度/Google 直接抓取富媒体摘要。
-- 完美适配 OpenGraph 和 Twitter Cards，微信/TG 分享自带精美卡片。
+- 采用 JSON-LD 注入 `EducationalGame` Schema 结构化数据，各大搜索引擎直接抓取富媒体摘要。
+- 完美适配 OpenGraph 和 Twitter Cards。
+- 配置了 `lint-staged` + `husky` 钩子，保障代码提交规范。
+- 剥离生产环境 Console，异步懒加载重型组件 (canvas-confetti)。
 
 ### 🚀 CI/CD 与多云部署 (Multi-Cloud)
-本项目支持全静态导出 (Static Export)，支持**零配置**一键部署至全球各大免费平台：
 
-1. **Vercel (主力极速节点)**：内置最佳实践，支持分支预览。
-2. **Cloudflare Pages (全站灾备)**：已内置 `.github/workflows/cloudflare.yml` 自动化部署流水线。
-3. **GitHub Pages (免费兜底)**：已内置 `.github/workflows/nextjs.yml` 静态导出流水线。
-4. **Zeabur / Netlify (国内优化)**：完全兼容静态导出，适合国内直连加速。
+本项目支持全静态导出 (Static Export)，支持一键部署至：
 
----
-
-## 🛣 里程碑 (Milestones)
-
-- [x] **v0.1: 基石构建** - Next.js 15 基础框架、色彩发现者原型。
-- [x] **v0.2: 逻辑游戏** - 引入极限 24 点与星球数独。
-- [x] **v0.3: PWA 改造** - 引入离线缓存机制，支持手机端一键安装至桌面。
-- [x] **v0.4: 全球引流** - 深度 SEO 优化、JSON-LD 结构化数据注入、多云部署流水线。
-- [x] **v0.5: 社交裂变** - 原生 Web Share 社交分享、PWA 安装交互提示、新增舒尔特方格。
-- [x] **v1.0: 体验跃升 (Release)** - 纯代码合成音效引擎 (Web Audio)、全局 Haptics 震动、全新「成就徽章系统」、以及补全蒙特梭利体系的「找规律」与「影子匹配」。
-- [ ] **v1.1: 国际化出海** - 全面多语言支持 (i18n, en/zh) 与自定义游戏难度。
+1. **Cloudflare Pages (首选)**：已内置流水线。
+2. **Vercel** / **GitHub Pages** / **Zeabur**
 
 ---
 

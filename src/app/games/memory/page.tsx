@@ -22,21 +22,14 @@ export default function MemoryGame() {
   const [moves, setMoves] = useState(0);
   const [pairsToPlay, setPairsToPlay] = useState(6);
 
-  const {
-    gameState,
-    score,
-    initGame,
-    handleCorrect,
-    handleWrong,
-    setGameState
-  } = useGameSession({
+  const { gameState, score, initGame, handleCorrect, handleWrong, setGameState } = useGameSession({
     gameId: "memory",
     winCondition: (_, totalCorrect) => totalCorrect >= pairsToPlay,
     onWin: () => {
       if (pairsToPlay === 8) {
         // We could unlock a badge here for hard mode if needed
       }
-    }
+    },
   });
 
   const generateCards = useCallback(() => {
@@ -47,13 +40,15 @@ export default function MemoryGame() {
       const j = Math.floor(Math.random() * (i + 1));
       [gameEmojis[i], gameEmojis[j]] = [gameEmojis[j], gameEmojis[i]];
     }
-    
-    setCards(gameEmojis.map((emoji, index) => ({
-      id: index,
-      emoji,
-      isFlipped: false,
-      isMatched: false,
-    })));
+
+    setCards(
+      gameEmojis.map((emoji, index) => ({
+        id: index,
+        emoji,
+        isFlipped: false,
+        isMatched: false,
+      }))
+    );
   }, [pairsToPlay]);
 
   const handleStart = () => {
@@ -71,18 +66,18 @@ export default function MemoryGame() {
 
     const newFlipped = [...flippedIndices, index];
     setFlippedIndices(newFlipped);
-    
+
     const newCards = [...cards];
     newCards[index].isFlipped = true;
     setCards(newCards);
 
     if (newFlipped.length === 2) {
-      setMoves(m => m + 1);
+      setMoves((m) => m + 1);
       const [firstIndex, secondIndex] = newFlipped;
       if (cards[firstIndex].emoji === cards[secondIndex].emoji) {
         // Match
         setTimeout(() => {
-          setCards(prev => {
+          setCards((prev) => {
             const matched = [...prev];
             matched[firstIndex].isMatched = true;
             matched[secondIndex].isMatched = true;
@@ -94,7 +89,7 @@ export default function MemoryGame() {
       } else {
         // No match
         setTimeout(() => {
-          setCards(prev => {
+          setCards((prev) => {
             const reset = [...prev];
             reset[firstIndex].isFlipped = false;
             reset[secondIndex].isFlipped = false;
@@ -123,15 +118,15 @@ export default function MemoryGame() {
             翻开两张相同的卡片即可消除。考验你瞬间记忆力的时候到了！
           </p>
           <div className="flex gap-4 justify-center">
-            <button 
+            <button
               onClick={() => setPairsToPlay(6)}
-              className={`px-4 py-2 rounded-full font-bold transition-all ${pairsToPlay === 6 ? 'bg-orange-500 text-white shadow-md' : 'bg-orange-100 text-orange-600'}`}
+              className={`px-4 py-2 rounded-full font-bold transition-all ${pairsToPlay === 6 ? "bg-orange-500 text-white shadow-md" : "bg-orange-100 text-orange-600"}`}
             >
               简单 (12张)
             </button>
-            <button 
+            <button
               onClick={() => setPairsToPlay(8)}
-              className={`px-4 py-2 rounded-full font-bold transition-all ${pairsToPlay === 8 ? 'bg-orange-500 text-white shadow-md' : 'bg-orange-100 text-orange-600'}`}
+              className={`px-4 py-2 rounded-full font-bold transition-all ${pairsToPlay === 8 ? "bg-orange-500 text-white shadow-md" : "bg-orange-100 text-orange-600"}`}
             >
               困难 (16张)
             </button>
@@ -149,16 +144,16 @@ export default function MemoryGame() {
             </div>
           </div>
 
-          <div 
+          <div
             className="grid gap-2 sm:gap-3 w-full"
-            style={{ 
+            style={{
               gridTemplateColumns: `repeat(${pairsToPlay === 6 ? 3 : 4}, minmax(0, 1fr))`,
-              maxWidth: pairsToPlay === 6 ? '350px' : '450px'
+              maxWidth: pairsToPlay === 6 ? "350px" : "450px",
             }}
           >
             {cards.map((card, i) => (
-              <div 
-                key={card.id} 
+              <div
+                key={card.id}
                 className="relative aspect-[3/4] cursor-pointer"
                 style={{ perspective: "1000px" }}
                 onClick={() => handleCardClick(i)}
@@ -171,19 +166,23 @@ export default function MemoryGame() {
                   transition={{ duration: 0.4, type: "spring", stiffness: 260, damping: 20 }}
                 >
                   {/* Back of card (visible when face down) */}
-                  <div 
+                  <div
                     className="absolute w-full h-full bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl shadow-md border-4 border-white flex items-center justify-center"
                     style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                   >
                     <span className="text-white opacity-50 text-2xl font-black">?</span>
                   </div>
-                  
+
                   {/* Front of card (visible when face up) */}
-                  <div 
+                  <div
                     className={`absolute w-full h-full bg-white rounded-2xl shadow-sm border-2 flex items-center justify-center text-4xl sm:text-5xl
-                      ${card.isMatched ? 'border-green-400 shadow-green-100' : 'border-gray-100'}
+                      ${card.isMatched ? "border-green-400 shadow-green-100" : "border-gray-100"}
                     `}
-                    style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                    style={{
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                    }}
                   >
                     <motion.div
                       animate={card.isMatched ? { scale: [1, 1.2, 1] } : {}}
