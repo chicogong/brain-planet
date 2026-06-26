@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -24,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const gameUrls = games.map((game) => ({
-    url: `https://kids.aimake.cc/games/${game}`,
+    url: `${SITE_URL}/games/${game}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as "weekly",
     priority: 0.9,
@@ -32,19 +33,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: "https://kids.aimake.cc",
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
     },
     {
-      url: "https://kids.aimake.cc/parents",
+      url: `${SITE_URL}/parents`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: "https://kids.aimake.cc/about",
+      url: `${SITE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
