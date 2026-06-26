@@ -140,14 +140,30 @@ src/
 
 ---
 
-## 🤝 如何添加新游戏 (How to Add a New Game)
+## 🤝 欢迎开源共建 (Open Source Contribution)
 
-本项目架构极度解耦，新增游戏只需 3 步：
+Brain Planet 是 [Aimake Universe（爱创星球）](https://aimake.cc) 旗下的儿童产品。我们坚信儿童益智游戏天然适合社区共建。无论你是开发者、设计师还是教育工作者，都可以轻松参与进来！
+
+### 🛡️ 核心底线
+
+在贡献代码前，请**务必阅读**我们的 [《儿童安全与隐私设计原则》(SAFETY_PRINCIPLES.md)](SAFETY_PRINCIPLES.md)。我们对任何形式的广告、数据追踪和暗黑模式**零容忍**。
+
+### 📜 治理模型
+
+关于新游戏的准入标准和 PR 合并规则，请查阅 [项目治理大纲 (GOVERNANCE.md)](GOVERNANCE.md)。
+
+### 🧩 插件式贡献指南 (Plugin-style Contribution)
+
+本项目架构极度解耦，新增游戏只需按规范注册元数据，即可自动接入主页进度、SEO 和 PWA：
 
 1. 在 `src/app/games/` 下新建你的游戏文件夹（如 `my-game/page.tsx`）。
-2. 在 `src/data/games.ts` 中注册新游戏的元数据（名称、图标、路由）。
-3. （可选）在 `sitemap.ts` 中添加该路由以获得 SEO 收录。
+2. 在 `src/data/games.ts` 中按照规范注册新游戏的元数据（如 `ageRange`, `skills`）。
+3. 提交前，请使用我们准备好的 [Pull Request 模板](.github/PULL_REQUEST_TEMPLATE.md)。
 
-欢迎提交 Pull Request，一起为孩子打造更丰富的脑力宇宙！
+如果你有了一个好点子但还没写代码，可以通过 [New Game Issue 模板](https://github.com/chicogong/brain-planet/issues/new/choose) 来提议。
 
-> **Created by [Chico](https://chico.aimake.cc/)**
+> **💡 Good First Issues**: 如果你是第一次参与开源，可以在 Issues 面板中寻找打有 `good first issue` 标签的任务，通常是一些简单的 UI 调整或音效替换。
+
+---
+
+> **Part of [Aimake Universe](https://aimake.cc)（爱创星球）** · [Aimake Labs](https://github.com/chicogong) | Created by [Chico](https://github.com/chicogong)

@@ -120,8 +120,11 @@ export default function RootLayout({
         {/* Footer */}
         <footer className="w-full py-6 mt-auto bg-white border-t border-gray-100">
           <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-            <div>
-              &copy; {new Date().getFullYear()} 脑力星球 (Brain Planet). All rights reserved.
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+              <span>&copy; {new Date().getFullYear()} 脑力星球 (Brain Planet)</span>
+              <a href="https://aimake.cc" className="hover:text-indigo-600 transition-colors">
+                爱创星球 · Aimake Universe
+              </a>
             </div>
             <div className="flex items-center gap-6">
               <a
