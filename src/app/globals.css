@@ -120,7 +120,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground min-h-screen bg-fixed;
+    background-color: #f6f8fd;
+    background-image:
+      radial-gradient(at 80% 0%, hsla(289, 100%, 75%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(340, 100%, 76%, 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, hsla(240, 100%, 75%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(200, 100%, 75%, 0.12) 0px, transparent 50%);
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
