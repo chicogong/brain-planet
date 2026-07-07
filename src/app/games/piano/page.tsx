@@ -6,6 +6,11 @@ import { tts } from "@/lib/tts";
 import { GameContainer } from "@/components/GameContainer";
 import { motion } from "framer-motion";
 
+type WebAudioWindow = Window &
+  typeof globalThis & {
+    webkitAudioContext?: typeof AudioContext;
+  };
+
 const NOTES = [
   { name: "Do", color: "bg-red-400", freq: 261.63 },
   { name: "Re", color: "bg-orange-400", freq: 293.66 },
@@ -28,7 +33,7 @@ export default function MagicPianoGame() {
   const incrementGameStat = useUserStore((state) => state.incrementGameStat);
 
   useEffect(() => {
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || (window as WebAudioWindow).webkitAudioContext;
     if (AudioContextClass) {
       audioCtxRef.current = new AudioContextClass();
     }

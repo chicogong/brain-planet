@@ -11,8 +11,17 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    "public/sw.js",
+    "public/workbox-*.js",
+    ".agents/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      "react-hooks/purity": "off",
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;

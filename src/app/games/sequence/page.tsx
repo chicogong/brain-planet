@@ -68,7 +68,7 @@ export default function SequenceGame() {
     const story = available[Math.floor(Math.random() * available.length)];
 
     // Shuffle items ensuring they are not already in perfect order
-    let shuffled = [...story.items];
+    const shuffled = [...story.items];
     while (JSON.stringify(shuffled) === JSON.stringify(story.items)) {
       shuffled.sort(() => Math.random() - 0.5);
     }

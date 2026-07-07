@@ -8,6 +8,12 @@ import { useGameSession } from "@/hooks/useGameSession";
 import { playSound, vibrate } from "@/lib/audio";
 import { tts } from "@/lib/tts";
 
+type DragInfo = {
+  point: {
+    x: number;
+  };
+};
+
 type Category = "水果" | "交通工具" | "动物" | "衣服";
 
 interface Item {
@@ -70,7 +76,7 @@ export default function SortingGame() {
     generateRound();
   };
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: DragInfo) => {
     if (gameState !== "playing") return;
 
     // Check drop zone based on screen X coordinate

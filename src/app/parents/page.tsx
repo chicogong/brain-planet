@@ -22,8 +22,8 @@ export default function ParentsDashboard() {
   const [error, setError] = useState(false);
 
   // Math problem for parent gate
-  const [num1] = useState(Math.floor(Math.random() * 5) + 6); // 6-10
-  const [num2] = useState(Math.floor(Math.random() * 5) + 6); // 6-10
+  const [num1] = useState(() => Math.floor(Math.random() * 5) + 6); // 6-10
+  const [num2] = useState(() => Math.floor(Math.random() * 5) + 6); // 6-10
   const correctAnswer = num1 * num2;
 
   // Store data
@@ -188,10 +188,11 @@ export default function ParentsDashboard() {
               />
               <PolarRadiusAxis angle={30} domain={[0, "dataMax"]} tick={false} axisLine={false} />
               <Tooltip
-                formatter={(value: any, name: any, props: any) => [
-                  props.payload.actual + " 次训练",
-                  "游玩频次",
-                ]}
+                formatter={(
+                  _value: unknown,
+                  _name: unknown,
+                  props: { payload?: { actual?: number } }
+                ) => [`${props.payload?.actual ?? 0} 次训练`, "游玩频次"]}
                 contentStyle={{
                   borderRadius: "16px",
                   border: "none",
