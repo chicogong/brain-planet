@@ -7,6 +7,7 @@ import { Lock } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { InstallBanner } from "@/components/InstallBanner";
+import { DailyMissionCard } from "@/components/DailyMissionCard";
 
 const container = {
   hidden: { opacity: 0 },
@@ -36,6 +37,8 @@ export default function Home() {
         </p>
       </div>
 
+      <DailyMissionCard />
+
       <Link
         href="/adventure"
         className="w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-3xl p-8 mb-12 text-white shadow-[0_20px_40px_-15px_rgba(99,102,241,0.5)] hover:shadow-[0_25px_50px_-12px_rgba(99,102,241,0.6)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] flex items-center justify-between relative overflow-hidden group border border-white/20"
@@ -45,7 +48,7 @@ export default function Home() {
           <span className="text-[150px] drop-shadow-2xl">🚀</span>
         </div>
         <div className="relative z-10">
-          <div className="bg-white/20 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4 backdrop-blur-md border border-white/30 shadow-inner">
+          <div className="bg-white/20 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold mb-4  border border-white/30 shadow-inner">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
             核心玩法
           </div>
@@ -56,7 +59,7 @@ export default function Home() {
             按顺序解锁星球关卡，开启属于你的脑力探险之旅！
           </p>
         </div>
-        <div className="hidden sm:flex relative z-10 w-16 h-16 bg-white/20 rounded-full items-center justify-center backdrop-blur-md border border-white/30 group-hover:bg-white group-hover:text-purple-600 transition-colors shadow-lg">
+        <div className="hidden sm:flex relative z-10 w-16 h-16 bg-white/20 rounded-full items-center justify-center  border border-white/30 group-hover:bg-white group-hover:text-purple-600 transition-colors shadow-lg">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -91,7 +94,7 @@ export default function Home() {
             {game.locked ? (
               <div className="relative group opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                 <Card
-                  className={`overflow-hidden border border-white/50 bg-white/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full rounded-3xl`}
+                  className={`overflow-hidden border border-white/50 bg-white/40  shadow-[0_8px_30px_rgb(0,0,0,0.04)] h-full rounded-3xl`}
                 >
                   <div
                     className={`p-8 flex flex-col items-center justify-center space-y-4 ${game.bgColor} h-44 bg-opacity-40`}
@@ -112,7 +115,7 @@ export default function Home() {
             ) : (
               <Link href={game.path} className="block h-full relative group">
                 <Card
-                  className={`overflow-hidden border border-white/60 bg-white/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-white transition-all duration-300 h-full transform group-hover:-translate-y-2 rounded-3xl`}
+                  className={`overflow-hidden border border-white/60 bg-white/60  shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] hover:border-white transition-all duration-300 h-full transform group-hover:-translate-y-2 rounded-3xl`}
                 >
                   <div
                     className={`p-8 flex flex-col items-center justify-center space-y-4 ${game.bgColor} h-44 relative overflow-hidden`}
@@ -164,7 +167,7 @@ export default function Home() {
       <div className="mt-14 flex justify-center">
         <Link
           href="/parents"
-          className="flex items-center gap-2 px-8 py-3.5 bg-white/80 backdrop-blur-md border border-purple-100 text-purple-600 rounded-full font-bold shadow-lg shadow-purple-500/10 hover:shadow-xl hover:bg-white hover:-translate-y-1 transition-all duration-300 active:scale-95 group"
+          className="flex items-center gap-2 px-8 py-3.5 bg-white/80  border border-purple-100 text-purple-600 rounded-full font-bold shadow-lg shadow-purple-500/10 hover:shadow-xl hover:bg-white hover:-translate-y-1 transition-all duration-300 active:scale-95 group"
         >
           <Lock className="w-4 h-4 group-hover:animate-bounce" /> 家长专属看板
         </Link>

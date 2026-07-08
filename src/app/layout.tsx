@@ -86,6 +86,8 @@ export const metadata: Metadata = {
 
 import Script from "next/script";
 
+import { AimakeOrbit } from "@/components/AimakeOrbit";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -159,6 +161,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        <AimakeOrbit />
         <Analytics />
         <SpeedInsights />
       </body>

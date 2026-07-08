@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { BadgeModal } from "@/components/BadgeModal";
 import { StatsModal } from "@/components/StatsModal";
+import { BackpackWidget } from "@/components/BackpackWidget";
 import { playSound } from "@/lib/audio";
 
 export function TopBar() {
@@ -111,6 +112,7 @@ export function TopBar() {
             </button>
           )}
 
+          <BackpackWidget />
           <BadgeModal />
           <button
             onClick={toggleMute}

@@ -134,7 +134,7 @@ export default function WordMatchGame() {
         currentPuzzle && (
           <div className="w-full flex flex-col items-center">
             {/* Display Area */}
-            <div className="bg-white/50 backdrop-blur-sm p-6 rounded-3xl w-full max-w-[320px] flex flex-col items-center mb-8 border-2 border-blue-100 shadow-sm">
+            <div className="bg-white/50  p-6 rounded-3xl w-full max-w-[320px] flex flex-col items-center mb-8 border-2 border-blue-100 shadow-sm">
               <motion.div
                 key={currentPuzzle.word}
                 initial={{ scale: 0.5, opacity: 0 }}

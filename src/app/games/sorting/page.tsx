@@ -188,7 +188,7 @@ export default function SortingGame() {
                 key={cat}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleBinClick(idx)}
-                className="flex-1 bg-white/60 backdrop-blur-md border-4 border-dashed border-orange-300 rounded-3xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm"
+                className="flex-1 bg-white/60  border-4 border-dashed border-orange-300 rounded-3xl p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm"
               >
                 <div className="text-3xl mb-2">
                   {cat === "水果" ? "🧺" : cat === "交通工具" ? "🛣️" : cat === "动物" ? "🐾" : "👗"}

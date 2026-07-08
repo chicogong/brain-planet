@@ -132,7 +132,7 @@ export default function ParentsDashboard() {
 
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto w-full px-4 pb-12">
-      <div className="w-full flex items-center mb-8 sticky top-0 bg-gray-50/80 backdrop-blur-md py-4 z-10">
+      <div className="w-full flex items-center mb-8 sticky top-0 bg-gray-50/80  py-4 z-10">
         <Link
           href="/"
           className="p-2 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors mr-4"
